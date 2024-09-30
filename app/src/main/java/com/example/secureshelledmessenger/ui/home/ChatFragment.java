@@ -68,7 +68,7 @@ public class ChatFragment extends Fragment {
         sendButton.setOnClickListener(v -> {
             String messageContent = messageInput.getText().toString();
             if (!messageContent.isEmpty()) {
-                Message message = new Message("You", messageContent);
+                Message message = new Message("You", messageContent, "Bob");
                 messageList.add(message);
                 messageInput.setText("");
             }

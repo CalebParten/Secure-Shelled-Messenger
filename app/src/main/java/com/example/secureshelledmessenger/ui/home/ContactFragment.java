@@ -27,9 +27,9 @@ public class ContactFragment extends Fragment {
 
     private List<Message> loadDummyMessages() {
         List<Message> messages = new ArrayList<>();
-        messages.add(new Message("Alice", "Hey, how are you?"));
-        messages.add(new Message("You", "I am fine, thanks!"));
-        messages.add(new Message("Alice", "Are you coming to the party?"));
+        messages.add(new Message("Alice", "Hey, how are you?","Bob"));
+        messages.add(new Message("You", "I am fine, thanks!","Bob"));
+        messages.add(new Message("Alice", "Are you coming to the party?","Bob"));
         // Add more dummy messages as needed
         return messages;
     }
