@@ -46,7 +46,7 @@ public class ContactListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         adapter = new ContactAdapter(contactList, requireActivity());
-        ContactAdapter contactAdapter = new ContactAdapter(contactList, getActivity());
+//        ContactAdapter contactAdapter = new ContactAdapter(contactList, getActivity());
 //        recyclerView.setAdapter(contactAdapter);
         recyclerView.setAdapter(adapter);
 
