@@ -7,6 +7,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.secureshelledmessenger.R;
@@ -38,6 +41,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         holder.bind(contact);
 
         holder.itemView.setOnClickListener(v -> {
+            FragmentManager fragmentManager = activity.getSupportFragmentManager();
+            while (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStack();
+            }
             if (activity != null) {
                 ChatFragment chatFragment = ChatFragment.newInstance(contact);
                 activity.getSupportFragmentManager()
@@ -46,6 +53,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
                         .addToBackStack(null)
                         .commit();
             }
+//            NavController navController = Navigation.findNavController(v);
+//            navController.navigate(R.id.action_contacts_to_contact);
         });
     }
 
@@ -56,14 +65,17 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView contactName;
+        TextView contactPhoneNumber;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            contactName = itemView.findViewById(R.id.contact_name); // Ensure this ID matches your layout
+            contactName = itemView.findViewById(R.id.contact_name);// Ensure this ID matches your layout
+            contactPhoneNumber = itemView.findViewById(R.id.contact_phone);
         }
 
         public void bind(Contact contact) {
             contactName.setText(contact.getName());
+            contactPhoneNumber.setText(contact.getPhoneNumber());
         }
     }
 }

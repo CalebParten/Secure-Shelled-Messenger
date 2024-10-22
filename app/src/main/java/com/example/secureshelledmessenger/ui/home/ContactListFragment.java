@@ -32,6 +32,9 @@ public class ContactListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         contactList = new ArrayList<>();
+        contactList.add(new Contact("David","123"));
+        contactList.add(new Contact("Caleb","234"));
+        contactList.add(new Contact("Mario","345"));
     }
 
     @Override
@@ -44,7 +47,7 @@ public class ContactListFragment extends Fragment {
 
         adapter = new ContactAdapter(contactList, requireActivity());
         ContactAdapter contactAdapter = new ContactAdapter(contactList, getActivity());
-        recyclerView.setAdapter(contactAdapter);
+//        recyclerView.setAdapter(contactAdapter);
         recyclerView.setAdapter(adapter);
 
         return view;

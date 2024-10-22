@@ -1,0 +1,25 @@
+<resources>
+
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- Light Theme -->
+    <style name="LightTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorTextLight</item>
+    </style>
+
+    <!-- Dark Theme -->
+<!--    <style name="DarkTheme" parent="Theme.MaterialComponents.Dark.NoActionBar">-->
+<!--        <item name="colorPrimary">@color/darkPrimaryColor</item>-->
+<!--        <item name="colorPrimaryDark">@color/darkPrimaryColorDark</item>-->
+<!--        <item name="colorAccent">@color/darkAccentColor</item>-->
+<!--    </style>-->
+
+</resources>

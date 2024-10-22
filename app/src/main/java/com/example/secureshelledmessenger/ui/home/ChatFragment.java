@@ -55,6 +55,9 @@ public class ChatFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
         TextView contactName = view.findViewById(R.id.contact_name);
+        messageList = new ArrayList<>();
+        loadDummyMessages();
+
         contactName.setText(contact.getName());
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_messages);
@@ -71,9 +74,19 @@ public class ChatFragment extends Fragment {
                 Message message = new Message("You", messageContent, "Bob");
                 messageList.add(message);
                 messageInput.setText("");
+                messageAdapter.notifyDataSetChanged();
             }
         });
 
         return view;
+    }
+
+    public void loadDummyMessages(){
+        String contactName = contact.getName();
+        messageList.add(new Message("You","hello",contactName));
+        messageList.add(new Message(contactName,"hello","You"));
+        messageList.add(new Message("You","How are You?",contactName));
+        messageList.add(new Message(contactName,"Good, you?","You"));
+        messageList.add(new Message("You","Good",contactName));
     }
 }
