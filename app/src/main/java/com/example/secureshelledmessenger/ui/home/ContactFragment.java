@@ -71,7 +71,7 @@ public class ContactFragment extends Fragment {
         sendButton.setOnClickListener(v -> {
             String messageContent = messageInput.getText().toString();
             if(!messageContent.isEmpty()){
-                Message message = new Message("You", messageContent,contact.getName());
+                Message message = new Message((long)0,"You", messageContent,contact.getName());
                 messageList.add(message);
                 messageInput.setText("");
                 messageAdapter.notifyDataSetChanged();
@@ -81,9 +81,9 @@ public class ContactFragment extends Fragment {
     }
 
     private void loadDummyMessages() {
-        messageList.add(new Message("You", "Hey, how are you?",contact.getName()));
-        messageList.add(new Message(contact.getName(), "I am fine, thanks!","You"));
-        messageList.add(new Message("You", "Are you coming to the party?",contact.getName()));
+        messageList.add(new Message((long)0,"You", "Hey, how are you?",contact.getName()));
+        messageList.add(new Message((long)0,contact.getName(), "I am fine, thanks!","You"));
+        messageList.add(new Message((long)0,"You", "Are you coming to the party?",contact.getName()));
         // Add more dummy messages as needed
     }
 

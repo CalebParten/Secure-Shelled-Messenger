@@ -32,9 +32,9 @@ public class ContactListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         contactList = new ArrayList<>();
-        contactList.add(new Contact("David","123"));
-        contactList.add(new Contact("Caleb","234"));
-        contactList.add(new Contact("Mario","345"));
+        contactList.add(new Contact((long)0,"David","123"));
+        contactList.add(new Contact((long)0,"Caleb","234"));
+        contactList.add(new Contact((long)0,"Mario","345"));
     }
 
     @Override

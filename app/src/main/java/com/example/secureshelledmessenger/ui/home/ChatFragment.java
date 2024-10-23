@@ -71,7 +71,7 @@ public class ChatFragment extends Fragment {
         sendButton.setOnClickListener(v -> {
             String messageContent = messageInput.getText().toString();
             if (!messageContent.isEmpty()) {
-                Message message = new Message("You", messageContent, "Bob");
+                Message message = new Message((long)0,"You", messageContent, "Bob");
                 messageList.add(message);
                 messageInput.setText("");
                 messageAdapter.notifyDataSetChanged();
@@ -83,10 +83,10 @@ public class ChatFragment extends Fragment {
 
     public void loadDummyMessages(){
         String contactName = contact.getName();
-        messageList.add(new Message("You","hello",contactName));
-        messageList.add(new Message(contactName,"hello","You"));
-        messageList.add(new Message("You","How are You?",contactName));
-        messageList.add(new Message(contactName,"Good, you?","You"));
-        messageList.add(new Message("You","Good",contactName));
+        messageList.add(new Message((long)0,"You","hello",contactName));
+        messageList.add(new Message((long)0,contactName,"hello","You"));
+        messageList.add(new Message((long)0,"You","How are You?",contactName));
+        messageList.add(new Message((long)0,contactName,"Good, you?","You"));
+        messageList.add(new Message((long)0,"You","Good",contactName));
     }
 }
