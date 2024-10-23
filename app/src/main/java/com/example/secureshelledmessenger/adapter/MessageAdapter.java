@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.secureshelledmessenger.model.Message;
@@ -31,8 +32,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Message message = messages.get(position);
+
         holder.senderTextView.setText(message.getSender());
         holder.contentTextView.setText(message.getContent());
+        if(!message.getSender().equals("You")){
+            holder.itemView.setTranslationX(400);
+            holder.itemView.setBackgroundResource(R.drawable.background_message_item);
+        }
+        else{
+            holder.itemView.setBackgroundResource(R.drawable.background_sender_message_item);
+        }
     }
 
     @Override

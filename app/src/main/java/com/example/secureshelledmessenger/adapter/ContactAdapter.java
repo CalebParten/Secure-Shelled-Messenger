@@ -1,5 +1,6 @@
 package com.example.secureshelledmessenger.adapter;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,14 +8,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.secureshelledmessenger.R;
 import com.example.secureshelledmessenger.model.Contact;
-import com.example.secureshelledmessenger.ui.home.ChatFragment;
 
 import java.util.List;
 
@@ -41,20 +40,19 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         holder.bind(contact);
 
         holder.itemView.setOnClickListener(v -> {
-            FragmentManager fragmentManager = activity.getSupportFragmentManager();
-            while (fragmentManager.getBackStackEntryCount() > 0) {
-                fragmentManager.popBackStack();
-            }
-            if (activity != null) {
-                ChatFragment chatFragment = ChatFragment.newInstance(contact);
-                activity.getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.nav_host_fragment_activity_main, chatFragment)
-                        .addToBackStack(null)
-                        .commit();
-            }
-//            NavController navController = Navigation.findNavController(v);
-//            navController.navigate(R.id.action_contacts_to_contact);
+//            if (activity != null) {
+//                ChatFragment chatFragment = ChatFragment.newInstance(contact);
+//                activity.getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.nav_host_fragment_activity_main, chatFragment)
+//                        .addToBackStack(null)
+//                        .commit();
+//            }
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("contact",contacts.get(position));
+
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.action_contacts_to_contact, bundle);
         });
     }
 

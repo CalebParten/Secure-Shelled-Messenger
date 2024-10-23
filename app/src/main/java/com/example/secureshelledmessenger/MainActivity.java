@@ -68,4 +68,13 @@ public class MainActivity extends AppCompatActivity {
             recreate(); // Consider commenting this out for a smoother experience
         }
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        //Get instance of Navigation Controller
+        NavController navController = Navigation.findNavController(findViewById(R.id.nav_host_fragment_activity_main));
+
+        //returns True, navController returns to previous fragment
+        return navController.navigateUp();
+    }
 }
