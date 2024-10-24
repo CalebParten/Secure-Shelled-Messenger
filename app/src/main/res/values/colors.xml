@@ -29,6 +29,8 @@
     <color name="colorTextLight">#000000</color>
     <color name="colorTextDark">#FFFFFF</color>
     <color name="colorTextLightDark">#333333</color>
+    <color name="hintTextColorLight">#808080</color>
+    <color name="hintTextColorDark">#FFFFFF</color>
 
     <!-- High Contrast Colors -->
     <color name="yellow">#FFFF00</color>
