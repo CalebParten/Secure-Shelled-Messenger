@@ -54,7 +54,7 @@ public class ChatFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
-        TextView contactName = view.findViewById(R.id.contact_name);
+        TextView contactName = view.findViewById(R.id.new_contact_name);
         messageList = new ArrayList<>();
         loadDummyMessages();
 

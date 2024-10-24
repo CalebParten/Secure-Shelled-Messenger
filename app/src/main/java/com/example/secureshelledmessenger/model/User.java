@@ -1,8 +1,9 @@
 package com.example.secureshelledmessenger.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class User {
+public class User implements Serializable {
 
     private Long id;
     private String username;
@@ -30,5 +31,13 @@ public class User {
 
     public ArrayList<Contact> getContacts() {
         return contacts;
+    }
+
+    public void addContact(Contact contact){
+        contacts.add(contact);
+    }
+
+    public void removeContact(int position){
+        contacts.remove(position);
     }
 }

@@ -6,7 +6,7 @@
 
     <!-- Contact Info Area -->
     <TextView
-        android:id="@+id/contact_name"
+        android:id="@+id/new_contact_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Contact Name"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:hint="Private Key"
         android:inputType="textPassword"
-        app:layout_constraintTop_toBottomOf="@id/contact_name"
+        app:layout_constraintTop_toBottomOf="@id/new_contact_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:padding="16dp" />

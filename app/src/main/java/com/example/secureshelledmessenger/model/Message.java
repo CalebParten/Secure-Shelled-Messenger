@@ -8,6 +8,8 @@ public class Message {
     private String content;
     private String receiver;
     private LocalDateTime timestamp;
+    private Long senderID;
+    private Long receiverID;
 
     public Message(Long id,String sender, String content, String receiver) {
         this.id = id;

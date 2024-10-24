@@ -17,11 +17,20 @@
         <action
             android:id="@+id/action_contacts_to_contact"
             app:destination="@id/navigation_contact" />
+        <action
+            android:id="@+id/action_contacts_to_edit_contact"
+            app:destination="@+id/navigation_edit_contact"/>
     </fragment>
 
     <fragment
         android:id="@+id/navigation_contact"
         android:name="com.example.secureshelledmessenger.ui.home.ContactFragment"
+        android:label="Contact"
+        tools:layout="@layout/fragment_contact" />
+
+    <fragment
+        android:id="@+id/navigation_edit_contact"
+        android:name="com.example.secureshelledmessenger.ui.home.ContactEditFragment"
         android:label="Contact"
         tools:layout="@layout/fragment_contact" />
 

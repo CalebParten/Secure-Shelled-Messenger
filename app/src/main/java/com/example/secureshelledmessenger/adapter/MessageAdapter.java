@@ -35,7 +35,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         holder.senderTextView.setText(message.getSender());
         holder.contentTextView.setText(message.getContent());
-        if(!message.getSender().equals("You")){
+        if(message.getSender().equals("You")){
             holder.itemView.setTranslationX(400);
             holder.itemView.setBackgroundResource(R.drawable.background_message_item);
         }

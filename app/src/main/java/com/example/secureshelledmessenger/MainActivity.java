@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.secureshelledmessenger.model.Contact;
+import com.example.secureshelledmessenger.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,17 +17,25 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.secureshelledmessenger.databinding.ActivityMainBinding;
 import com.example.secureshelledmessenger.ui.home.AppTheme;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private AppTheme currentTheme; // Change to AppTheme type
+    private Long userID;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Load saved theme
         SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+
+        //Load saved User ID
+        userID = prefs.getLong("userID",9999);
+
+        // Load saved theme
         currentTheme = AppTheme.fromString(prefs.getString("theme", AppTheme.LIGHT.getName())); // Default to LIGHT if not set
 
         // Apply theme
@@ -67,6 +77,26 @@ public class MainActivity extends AppCompatActivity {
             // Recreate the activity to apply the new theme
             recreate(); // Consider commenting this out for a smoother experience
         }
+    }
+
+    public User getGlobalUser(){
+        //For now contacts is dummy data, future it will be gathered from database
+        ArrayList<Contact> contacts = new ArrayList<>();
+        contacts.add(new Contact((long)0,"David"));
+        contacts.add(new Contact((long)0,"Caleb"));
+        contacts.add(new Contact((long)0,"Mario"));
+        contacts.add(new Contact((long)0,"John"));
+        user = new User(userID,"","",contacts);
+        return user;
+    }
+
+    public void addGlobalUserContact(Contact contact){
+        user.addContact(contact);
+        System.out.println(user.getContacts());
+    }
+
+    public void replaceGlobalUserContact(int position, Contact contact){
+        user.getContacts().set(position,contact);
     }
 
     @Override

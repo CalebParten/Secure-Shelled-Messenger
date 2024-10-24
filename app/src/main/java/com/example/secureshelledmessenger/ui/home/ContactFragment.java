@@ -51,7 +51,7 @@ public class ContactFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_contact,container,false);
 
-        contactName = view.findViewById(R.id.contact_name);
+        contactName = view.findViewById(R.id.new_contact_name);
         privateKey = view.findViewById(R.id.private_key);
         messageInput = view.findViewById(R.id.message_input);
 

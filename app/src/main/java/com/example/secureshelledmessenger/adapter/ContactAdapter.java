@@ -2,8 +2,11 @@ package com.example.secureshelledmessenger.adapter;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +23,7 @@ import java.util.List;
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
     private List<Contact> contacts;
     private FragmentActivity activity;
+    private ImageView optionsButton;
 
     public ContactAdapter(List<Contact> contacts, FragmentActivity activity) {
         this.contacts = contacts;
@@ -38,21 +42,42 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Contact contact = contacts.get(position);
         holder.bind(contact);
+        optionsButton = holder.itemView.findViewById(R.id.options_image);
 
         holder.itemView.setOnClickListener(v -> {
-//            if (activity != null) {
-//                ChatFragment chatFragment = ChatFragment.newInstance(contact);
-//                activity.getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.nav_host_fragment_activity_main, chatFragment)
-//                        .addToBackStack(null)
-//                        .commit();
-//            }
             Bundle bundle = new Bundle();
             bundle.putSerializable("contact",contacts.get(position));
 
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.action_contacts_to_contact, bundle);
+        });
+
+        optionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+                popupMenu.getMenuInflater().inflate(R.menu.contact_options, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        if(menuItem.getTitle().equals("Delete")){
+                            contacts.remove(holder.getAdapterPosition());
+                            notifyDataSetChanged();
+                        }
+                        if(menuItem.getTitle().equals("Edit")){
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("contact",contacts.get(holder.getAdapterPosition()));
+                            bundle.putString("action","edit");
+                            bundle.putInt("position",holder.getAdapterPosition());
+
+                            NavController navController = Navigation.findNavController(view);
+                            navController.navigate(R.id.action_contacts_to_edit_contact, bundle);
+                        }
+                        return true;
+                    }
+                });
+                popupMenu.show();
+            }
         });
     }
 
@@ -63,17 +88,14 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView contactName;
-        TextView contactPhoneNumber;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            contactName = itemView.findViewById(R.id.contact_name);// Ensure this ID matches your layout
-            contactPhoneNumber = itemView.findViewById(R.id.contact_phone);
+            contactName = itemView.findViewById(R.id.new_contact_name);// Ensure this ID matches your layout
         }
 
         public void bind(Contact contact) {
             contactName.setText(contact.getName());
-            contactPhoneNumber.setText(contact.getPhoneNumber());
         }
     }
 }
