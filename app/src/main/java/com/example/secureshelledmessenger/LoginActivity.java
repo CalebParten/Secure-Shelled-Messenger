@@ -16,6 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.secureshelledmessenger.model.User;
+import com.example.secureshelledmessenger.ui.home.AppTheme;
 
 import java.util.ArrayList;
 
@@ -27,9 +28,18 @@ public class LoginActivity extends AppCompatActivity {
     EditText passwordField;
     Button submitButton;
 
+    private AppTheme currentTheme;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Load saved theme
+        SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        currentTheme = AppTheme.fromString(prefs.getString("theme", AppTheme.LIGHT.getName())); // Default to LIGHT if not set
+
+        // Apply theme
+        applyTheme(currentTheme);
 
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
@@ -91,4 +101,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void applyTheme(AppTheme theme) {
+        setTheme(theme.getStyleResId()); // Directly apply the theme
+    }
 }

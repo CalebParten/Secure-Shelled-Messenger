@@ -4,8 +4,10 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string-array name="theme_options">
-        <item>Light</item>
-        <item>Dark</item>
-        <item>System Default</item>
+        <item>LIGHT</item>
+        <item>DARK</item>
+        <item>LIGHT_DARK</item>
+        <item>HIGH_CONTRAST</item>
+
     </string-array>
 </resources>

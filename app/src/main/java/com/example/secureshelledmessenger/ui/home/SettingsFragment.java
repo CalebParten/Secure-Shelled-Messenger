@@ -17,8 +17,10 @@ import android.util.Log;
 public class SettingsFragment extends Fragment {
 
     private Spinner themes;
-    private static final String LIGHT_THEME = "Light";
-    private static final String DARK_THEME = "Dark";
+    private static final String LIGHT_THEME = "LIGHT";
+    private static final String DARK_THEME = "DARK";
+    private static final String LIGHT_DARK_THEME = "LIGHT_DARK";
+    private static final String HIGH_CONTRAST_THEME = "HIGH_CONTRAST";
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -46,10 +48,10 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedThemeString = (String) parent.getItemAtPosition(position);
-                
+
                 AppTheme selectedTheme;
                 try {
-                    selectedTheme = AppTheme.valueOf(selectedThemeString.toUpperCase());
+                    selectedTheme = AppTheme.fromString(selectedThemeString); // Use fromString method
                 } catch (IllegalArgumentException e) {
                     Log.e("SettingsFragment", "Invalid theme selected: " + selectedThemeString, e);
                     Toast.makeText(getContext(), "Invalid theme selected", Toast.LENGTH_SHORT).show();

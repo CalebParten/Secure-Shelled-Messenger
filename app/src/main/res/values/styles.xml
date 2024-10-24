@@ -1,25 +1,84 @@
 <resources>
-
-    <!-- Base application theme -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Customize your theme here -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
+    <!-- Base Theme -->
+    <style name="Theme.SecureShelledMessenger" parent="Theme.SecureShelledMessenger.Light" />
 
     <!-- Light Theme -->
-    <style name="LightTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorTextLight</item>
+    <style name="Theme.SecureShelledMessenger.Light" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <item name="android:statusBarColor">@color/purple_500</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:textColor">@color/colorTextLight</item>
+        <item name="colorBackground">@color/white</item>
+        <item name="colorOnBackground">@color/black</item>
+        <item name="android:spinnerStyle">@style/CustomSpinner.Light</item> <!-- Use Light Spinner Style -->
     </style>
 
     <!-- Dark Theme -->
-<!--    <style name="DarkTheme" parent="Theme.MaterialComponents.Dark.NoActionBar">-->
-<!--        <item name="colorPrimary">@color/darkPrimaryColor</item>-->
-<!--        <item name="colorPrimaryDark">@color/darkPrimaryColorDark</item>-->
-<!--        <item name="colorAccent">@color/darkAccentColor</item>-->
-<!--    </style>-->
+    <style name="Theme.SecureShelledMessenger.Dark" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/discord_gray</item>
+        <item name="colorPrimaryVariant">@color/discord_dark_gray</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/discord_blue</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:statusBarColor">@color/discord_dark_gray</item>
+        <item name="android:windowBackground">@color/discord_black</item>
+        <item name="android:textColor">@color/colorTextDark</item>
+        <item name="colorBackground">@color/discord_black</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="android:spinnerStyle">@style/CustomSpinner.Dark</item> <!-- Use Dark Spinner Style -->
+    </style>
 
+    <!-- Light-Dark Hybrid Theme -->
+    <style name="Theme.SecureShelledMessenger.LightDark" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/purple_700</item>
+        <item name="colorPrimaryVariant">@color/purple_900</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/teal_700</item>
+        <item name="colorSecondaryVariant">@color/teal_600</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:statusBarColor">@color/purple_900</item>
+        <item name="android:windowBackground">@color/gray_200</item>
+        <item name="android:textColor">@color/colorTextLightDark</item>
+        <item name="colorBackground">@color/gray_200</item>
+        <item name="colorOnBackground">@color/black</item>
+        <item name="android:spinnerStyle">@style/CustomSpinner.Light</item> <!-- Use Light Spinner Style -->
+    </style>
+
+    <!-- High Contrast Theme -->
+    <style name="Theme.SecureShelledMessenger.HighContrast" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/dark_gray</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/yellow</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <item name="android:statusBarColor">@color/black</item>
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="colorBackground">@color/black</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="android:spinnerStyle">@style/CustomSpinner.Dark</item> <!-- Use Dark Spinner Style -->
+    </style>
+
+    <!-- Custom Spinner Styles -->
+    <style name="CustomSpinner.Light" parent="Widget.AppCompat.Spinner">
+        <item name="android:background">@color/colorPrimary</item> <!-- Set a contrasting background -->
+        <item name="android:textColor">@color/colorOnPrimary</item> <!-- Ensure text color is legible -->
+    </style>
+
+    <style name="CustomSpinner.Dark" parent="Widget.AppCompat.Spinner">
+        <item name="android:background">@color/discord_gray</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:popupBackground">@color/discord_black</item>
+    </style>
+
+
+    <style name="CustomSpinner.DarkPinkBorder" parent="Widget.AppCompat.Spinner">
+        <item name="android:background">@color/discord_gray</item> <!-- Darker background for dark theme -->
+        <item name="android:textColor">@color/white</item> <!-- White text for visibility -->
+    </style>
 </resources>

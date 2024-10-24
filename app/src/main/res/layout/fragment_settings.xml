@@ -17,14 +17,15 @@
         android:padding="16dp"/>
 
     <Spinner
-        android:id="@+id/spinner_theme_selection"
-        android:layout_width="match_parent" 
-        android:layout_height="wrap_content"
-        android:contentDescription="Dropdown for selecting app theme" 
-        app:layout_constraintTop_toBottomOf="@id/txt_theme_selection"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"
-        android:background="?attr/colorBackground" 
-        android:textColor="?attr/colorOnBackground"/>
+    android:id="@+id/spinner_theme_selection"
+    android:layout_width="match_parent" 
+    android:layout_height="wrap_content"
+    android:contentDescription="Dropdown for selecting app theme" 
+    app:layout_constraintTop_toBottomOf="@id/txt_theme_selection"
+    app:layout_constraintStart_toStartOf="parent"
+    android:layout_marginTop="8dp"
+    android:background="?attr/colorBackground" 
+    android:textColor="?attr/colorOnBackground"
+    style="?android:attr/spinnerStyle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
