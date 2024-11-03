@@ -1,0 +1,14 @@
+<project name="MyProject" default="checkstyle" basedir=".">
+    <property name="checkstyle.config" value="checkstyle.xml"/>
+    
+    <target name="checkstyle">
+        <checkstyle 
+            config="${checkstyle.config}"
+            output="checkstyle-result.xml">
+            <fileset dir="src">
+                <include name="**/*.java"/>
+            </fileset>
+        </checkstyle>
+        <fail message="Checkstyle errors found" if="checkstyle.error.count"/>
+    </target>
+</project>
