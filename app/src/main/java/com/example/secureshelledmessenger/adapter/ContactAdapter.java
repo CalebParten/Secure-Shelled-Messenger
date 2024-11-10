@@ -1,5 +1,6 @@
 package com.example.secureshelledmessenger.adapter;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -15,12 +16,17 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.secureshelledmessenger.MainActivity;
 import com.example.secureshelledmessenger.R;
 import com.example.secureshelledmessenger.model.Contact;
+import com.example.secureshelledmessenger.ui.home.MainController;
 
 import java.util.List;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
+
+    private MainController mainController;
+
     private List<Contact> contacts;
     private FragmentActivity activity;
     private ImageView optionsButton;
@@ -28,6 +34,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     public ContactAdapter(List<Contact> contacts, FragmentActivity activity) {
         this.contacts = contacts;
         this.activity = activity;
+        this.mainController = MainController.getInstance();
     }
 
     @NonNull
@@ -61,7 +68,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         if(menuItem.getTitle().equals("Delete")){
-                            contacts.remove(holder.getAdapterPosition());
+//                            contacts.remove(holder.getAdapterPosition());
+                            mainController.deleteContact(holder.getAdapterPosition());
+                            contacts = mainController.getContactsList();
                             notifyDataSetChanged();
                         }
                         if(menuItem.getTitle().equals("Edit")){

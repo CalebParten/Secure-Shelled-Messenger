@@ -22,8 +22,10 @@ import java.util.ArrayList;
 
 public class ContactEditFragment extends Fragment {
 
+    private MainController mainController;
+
     private EditText nameField;
-    private EditText idField;
+    private EditText userField;
     private EditText keyField;
     private Button submitButton;
 
@@ -33,8 +35,6 @@ public class ContactEditFragment extends Fragment {
 
     MainActivity mainActivity;
 
-    private ArrayList<Contact> contactList;
-
     public ContactEditFragment() {
         // Required empty public constructor
     }
@@ -43,6 +43,8 @@ public class ContactEditFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         if (getActivity() != null && getActivity() instanceof MainActivity) {
             mainActivity = (MainActivity) getActivity();
         }
@@ -54,6 +56,8 @@ public class ContactEditFragment extends Fragment {
                 position = bundle.getInt("position");
             }
         }
+
+        mainController = MainController.getInstance(mainActivity.getApplicationContext());
     }
 
     @Override
@@ -68,14 +72,16 @@ public class ContactEditFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         nameField = view.findViewById(R.id.new_contact_name_field);
-        idField = view.findViewById(R.id.new_contact_id_field);
+
+        userField = view.findViewById(R.id.new_contact_user_field);
         keyField = view.findViewById(R.id.private_key);
         submitButton = view.findViewById(R.id.submit_button);
 
         if(action.equals("edit")){
             nameField.setText(contact.getName());
-            idField.setText(String.valueOf(contact.getUserId()));
-            idField.setEnabled(false);
+            keyField.setText(contact.getAssignedKey());
+            userField.setText(String.valueOf(contact.getUsername()));
+            userField.setEnabled(false);
         }
 
 
@@ -83,21 +89,23 @@ public class ContactEditFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                long id = Long.parseLong(idField.getText().toString());
+                String username = userField.getText().toString();
                 String name = nameField.getText().toString();
                 String key = keyField.getText().toString();
 
                 if(action.equals("create")){
-
-                    Contact newContact = new Contact(id,name);
-                    mainActivity.addGlobalUserContact(newContact);
+//                    Contact newContact = new Contact(name,username,key);
+                    mainController.addContact(name,username,key);
+                    mainActivity.updateGlobalUserContacts();
+//                    mainActivity.addGlobalUserContact(newContact);
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     fragmentManager.popBackStack();
 
                 }
                 else if(action.equals("edit")){
-                    Contact updatedContact = new Contact(id,name);
-                    mainActivity.replaceGlobalUserContact(position,updatedContact);
+                    Contact updatedContact = new Contact(name,username,key);
+                    mainController.editContact(name,username,key);
+                    mainActivity.updateGlobalUserContacts();
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     fragmentManager.popBackStack();
                 }

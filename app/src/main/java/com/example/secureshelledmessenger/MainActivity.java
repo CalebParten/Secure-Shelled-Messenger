@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.example.secureshelledmessenger.model.Contact;
 import com.example.secureshelledmessenger.model.User;
+import com.example.secureshelledmessenger.ui.home.MainController;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.secureshelledmessenger.databinding.ActivityMainBinding;
 import com.example.secureshelledmessenger.ui.home.AppTheme;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,10 +27,13 @@ public class MainActivity extends AppCompatActivity {
     private AppTheme currentTheme; // Change to AppTheme type
     private Long userID;
     private User user;
+    private MainController mainController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mainController = MainController.getInstance(this);
 
         SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
 
@@ -81,11 +86,12 @@ public class MainActivity extends AppCompatActivity {
 
     public User getGlobalUser(){
         //For now contacts is dummy data, future it will be gathered from database
-        ArrayList<Contact> contacts = new ArrayList<>();
-        contacts.add(new Contact((long)0,"David"));
-        contacts.add(new Contact((long)0,"Caleb"));
-        contacts.add(new Contact((long)0,"Mario"));
-        contacts.add(new Contact((long)0,"John"));
+        ArrayList<Contact> contacts = mainController.getContactsList();
+//        ArrayList<Contact> contacts = new ArrayList<>();
+//        contacts.add(new Contact("David","D123","d"));
+//        contacts.add(new Contact("Caleb","C234","c"));
+//        contacts.add(new Contact("Mario","M345","m"));
+//        contacts.add(new Contact("John","J456","j"));
         user = new User(userID,"","",contacts);
         return user;
     }
@@ -93,6 +99,11 @@ public class MainActivity extends AppCompatActivity {
     public void addGlobalUserContact(Contact contact){
         user.addContact(contact);
         System.out.println(user.getContacts());
+    }
+
+    public void updateGlobalUserContacts(){
+        ArrayList<Contact> updatedContacts = mainController.getContactsList();
+        user.setContacts(updatedContacts);
     }
 
     public void replaceGlobalUserContact(int position, Contact contact){

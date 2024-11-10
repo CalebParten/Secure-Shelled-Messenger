@@ -40,4 +40,8 @@ public class User implements Serializable {
     public void removeContact(int position){
         contacts.remove(position);
     }
+
+    public void setContacts(ArrayList<Contact> contacts){
+        this.contacts = contacts;
+    }
 }

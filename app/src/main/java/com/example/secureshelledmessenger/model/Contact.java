@@ -2,20 +2,33 @@ package com.example.secureshelledmessenger.model;
 import java.io.Serializable;
 
 public class Contact implements Serializable {
-    private Long userId;
     private String name;
+    private String username;
+    private String assignedKey;
 
-    public Contact(Long userId,String name) {
-        this.userId = userId;
+    public Contact(String name,String username,String assignedKey) {
         this.name = name;
-
+        this.username = username;
+        this.assignedKey = assignedKey;
     }
 
     public String getName() {
         return name;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getUsername(){return username;}
+
+    public String getAssignedKey(){return assignedKey;}
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setUsername(String username){
+        this.username = username;
+    }
+
+    public void setAssignedKey(String key){
+        this.assignedKey = key;
     }
 }

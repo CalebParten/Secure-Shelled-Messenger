@@ -21,12 +21,13 @@ import com.example.secureshelledmessenger.adapter.ContactAdapter;
 import com.example.secureshelledmessenger.model.Contact;
 import com.example.secureshelledmessenger.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContactListFragment extends Fragment {
 
     private ContactAdapter adapter;
-    private List<Contact> contactList;
+    private ArrayList<Contact> contactList;
     MainActivity mainActivity;
     Button createContactButton;
 
@@ -76,6 +77,17 @@ public class ContactListFragment extends Fragment {
         adapter = new ContactAdapter(contactList, requireActivity()); // Pass the activity reference
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity() != null && getActivity() instanceof MainActivity) {
+            mainActivity = (MainActivity) getActivity();
+            User user = mainActivity.getGlobalUser();
+            contactList = user.getContacts();
+            adapter.notifyDataSetChanged();
+        }
     }
 
     public void goToCreateContact(View view){

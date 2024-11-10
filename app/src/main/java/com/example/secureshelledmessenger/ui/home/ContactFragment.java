@@ -59,6 +59,7 @@ public class ContactFragment extends Fragment {
         loadDummyMessages();
 
         contactName.setText(contact.getName());
+        privateKey.setText(contact.getAssignedKey());
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_messages);
         MessageAdapter messageAdapter = new MessageAdapter(messageList);
