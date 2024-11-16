@@ -2,6 +2,7 @@ package com.example.secureshelledmessenger.ui.home;
 
 import android.content.Context;
 
+import com.example.secureshelledmessenger.model.ApiData;
 import com.example.secureshelledmessenger.model.Contact;
 import com.example.secureshelledmessenger.model.ContactData;
 
@@ -11,9 +12,11 @@ public class MainController {
 
     private static MainController mainController;
     private static ContactData contactDataModel;
+    private static ApiData apiDataModel;
 
     private MainController(Context context){
         contactDataModel = ContactData.getInstance(context);
+        apiDataModel = ApiData.getInstance(context);
     }
 
     public static MainController getInstance(Context context){
@@ -44,5 +47,17 @@ public class MainController {
 
     public void deleteContact(int position){
         contactDataModel.deleteContact(position);
+    }
+
+    public void getUserString(String username){
+        System.out.println("Request Result: " + apiDataModel.requestLookupUser(username));
+    }
+
+    public void createUser(String username, String password){
+        System.out.println("Create User Result: " + apiDataModel.requestCreateUser(username, password));
+    }
+
+    public String checkLogin(String username, String password){
+        return apiDataModel.requestLogin(username,password);
     }
 }

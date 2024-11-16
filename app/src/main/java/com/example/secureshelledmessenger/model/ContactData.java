@@ -15,12 +15,12 @@ public class ContactData {
     private TinyDB tinyDB;
 
 
-    private static final String DATABASE_NAME = "contacts";
-
     private ContactData(Context context){
         this.contacts = new ArrayList<>();
         this.tinyDB = new TinyDB(context);
-        loadDummyContacts();
+        if(getContacts().isEmpty()){
+            loadDummyContacts();
+        }
         saveContacts();
     }
 

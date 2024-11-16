@@ -58,6 +58,14 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+//                mainController.createUser("David","D123");
+                mainController.getUserString("David");
+            }
+        }).start();
     }
 
     private void applyTheme(AppTheme theme) {
@@ -87,11 +95,6 @@ public class MainActivity extends AppCompatActivity {
     public User getGlobalUser(){
         //For now contacts is dummy data, future it will be gathered from database
         ArrayList<Contact> contacts = mainController.getContactsList();
-//        ArrayList<Contact> contacts = new ArrayList<>();
-//        contacts.add(new Contact("David","D123","d"));
-//        contacts.add(new Contact("Caleb","C234","c"));
-//        contacts.add(new Contact("Mario","M345","m"));
-//        contacts.add(new Contact("John","J456","j"));
         user = new User(userID,"","",contacts);
         return user;
     }

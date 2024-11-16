@@ -17,10 +17,14 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.secureshelledmessenger.model.User;
 import com.example.secureshelledmessenger.ui.home.AppTheme;
+import com.example.secureshelledmessenger.ui.home.MainController;
 
 import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
+
+    MainController mainController;
+    private String userID;
 
     //Dummy data container (will change)
     ArrayList<User> users;
@@ -33,6 +37,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mainController = MainController.getInstance(this);
 
         // Load saved theme
         SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
@@ -63,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String username = usernameField.getText().toString();
                 String password = passwordField.getText().toString();
 
@@ -74,24 +81,33 @@ public class LoginActivity extends AppCompatActivity {
                     passwordField.setError("Password is Required");
                     passwordField.requestFocus();
                 }
-                else{
-                    for(User user: users){
-                        String currentUsername = user.getUsername();
-                        String currentPassword = user.getPassword();
-                        if(currentUsername.equals(username) && currentPassword.equals(password)){
-                            SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putLong("userID",user.getId());
-                            editor.apply();
-                            goToMainActivity();
-                            return;
-                        }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String loginCheckResult = mainController.checkLogin(username,password);
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                userID = loginCheckResult;
+                                System.out.println("Login Check Result (User ID): " + loginCheckResult);
+
+                                if(userID != null){
+                                    SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putLong("userID",Long.parseLong(userID));
+                                    editor.apply();
+                                    goToMainActivity();
+                                    return;
+                                }
+                                usernameField.setError("Incorrect Username or Password");
+                                usernameField.setText("");
+                                passwordField.setText("");
+                                usernameField.requestFocus();
+                            }
+                        });
                     }
-                    usernameField.setError("Incorrect Username or Password");
-                    usernameField.setText("");
-                    passwordField.setText("");
-                    usernameField.requestFocus();
-                }
+                }).start();
             }
         });
     }
