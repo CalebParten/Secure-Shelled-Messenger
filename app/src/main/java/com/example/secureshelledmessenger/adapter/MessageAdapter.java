@@ -33,9 +33,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Message message = messages.get(position);
 
-        holder.senderTextView.setText(message.getSender());
+        holder.senderTextView.setText(String.valueOf(message.getSenderId()));
         holder.contentTextView.setText(message.getContent());
-        if(message.getSender().equals("You")){
+        if(message.getSenderId() == (long)0){
             holder.itemView.setTranslationX(400);
             holder.itemView.setBackgroundResource(R.drawable.background_message_item);
         }

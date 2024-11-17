@@ -18,6 +18,7 @@ import com.example.secureshelledmessenger.adapter.MessageAdapter;
 import com.example.secureshelledmessenger.R;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +72,7 @@ public class ChatFragment extends Fragment {
         sendButton.setOnClickListener(v -> {
             String messageContent = messageInput.getText().toString();
             if (!messageContent.isEmpty()) {
-                Message message = new Message((long)0,"You", messageContent, "Bob");
+                Message message = new Message((long)0,messageContent, ((long)0), (long)0,LocalDateTime.now());
                 messageList.add(message);
                 messageInput.setText("");
                 messageAdapter.notifyDataSetChanged();
@@ -83,10 +84,10 @@ public class ChatFragment extends Fragment {
 
     public void loadDummyMessages(){
         String contactName = contact.getName();
-        messageList.add(new Message((long)0,"You","hello",contactName));
-        messageList.add(new Message((long)0,contactName,"hello","You"));
-        messageList.add(new Message((long)0,"You","How are You?",contactName));
-        messageList.add(new Message((long)0,contactName,"Good, you?","You"));
-        messageList.add(new Message((long)0,"You","Good",contactName));
+        messageList.add(new Message((long)0,"hello",(long)0,(long)1,LocalDateTime.now()));
+        messageList.add(new Message((long)0,"hello",(long)1,(long)0,LocalDateTime.now()));
+        messageList.add(new Message((long)0,"How are you?",(long)0,(long)1,LocalDateTime.now()));
+        messageList.add(new Message((long)0,"Good and you?",(long)1,(long)0,LocalDateTime.now()));
+        messageList.add(new Message((long)0,"Good",(long)0,(long)1,LocalDateTime.now()));
     }
 }

@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +73,7 @@ public class ContactFragment extends Fragment {
         sendButton.setOnClickListener(v -> {
             String messageContent = messageInput.getText().toString();
             if(!messageContent.isEmpty()){
-                Message message = new Message((long)0,"You", messageContent,contact.getName());
+                Message message = new Message((long)0,messageContent, (long)0,(long)1,LocalDateTime.now());
                 messageList.add(message);
                 messageInput.setText("");
                 messageAdapter.notifyDataSetChanged();
@@ -82,9 +83,9 @@ public class ContactFragment extends Fragment {
     }
 
     private void loadDummyMessages() {
-        messageList.add(new Message((long)0,"You", "Hey, how are you?",contact.getName()));
-        messageList.add(new Message((long)0,contact.getName(), "I am fine, thanks!","You"));
-        messageList.add(new Message((long)0,"You", "Are you coming to the party?",contact.getName()));
+        messageList.add(new Message((long)0,"Hey, how are you?", (long)0,(long)1, LocalDateTime.now()));
+        messageList.add(new Message((long)0,"I am fine, thanks!", (long)1,(long)0, LocalDateTime.now()));
+        messageList.add(new Message((long)0,"Are you coming to the party?", (long)0,(long)1, LocalDateTime.now()));
         // Add more dummy messages as needed
     }
 

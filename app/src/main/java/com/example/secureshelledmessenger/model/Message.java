@@ -1,55 +1,65 @@
 package com.example.secureshelledmessenger.model;
 
 import java.time.LocalDateTime;
-
 public class Message {
+
     private Long id;
-    private String sender;
     private String content;
-    private String receiver;
+    private Long senderId;
+    private Long receiverId;
     private LocalDateTime timestamp;
-    private Long senderID;
-    private Long receiverID;
 
-    public Message(Long id,String sender, String content, String receiver) {
-        this.id = id;
-        this.sender = sender;
-        this.content = content;
-        this.receiver = receiver;
-        generateTimeStamp();
-    }
-
-    public void generateTimeStamp(){
-        LocalDateTime time = LocalDateTime.now();
-        this.timestamp = time;
+    public Message(Long messageId, String messageContent, Long senderIdResponse, Long receiverIdResponse, LocalDateTime timestamp) {
+        this.setId(messageId);
+        this.setContent(messageContent);
+        this.setSenderId(senderIdResponse);
+        this.setReceiverId(receiverIdResponse);
+        this.setTimestamp(timestamp);
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getSender() {
-        return sender;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getContent() {
         return content;
     }
 
-    public String getReceiver() {
-        return receiver;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getTimeString(){
-        String hour = String.valueOf(timestamp.getHour());
-        String minutes = String.valueOf(timestamp.getMinute());
-        return hour +":"+ minutes;
+    public Long getSenderId() {
+        return senderId;
     }
 
-    public String getDateString(){
-        String month = String.valueOf(timestamp.getMonthValue());
-        String day = String.valueOf(timestamp.getDayOfMonth());
-        String year = String.valueOf(timestamp.getYear());
-        return month + "/" + day + "/" + year;
+    public void setSenderId(Long long1) {
+        this.senderId = long1;
+    }
+
+    public Long getReceiverId() {
+        return receiverId;
+    }
+
+    public void setReceiverId(Long receiverId) {
+        this.receiverId = receiverId;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    @Override
+    public String toString(){
+        return "{"+this.getId()+","+this.getContent()+","+this.getSenderId()+","+this.getReceiverId()+","+this.getTimestamp()+"}";
     }
 }
+
