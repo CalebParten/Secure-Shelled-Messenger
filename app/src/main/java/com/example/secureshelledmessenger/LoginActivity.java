@@ -15,7 +15,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.secureshelledmessenger.model.User;
+//import com.example.secureshelledmessenger.model.User;
 import com.example.secureshelledmessenger.ui.home.AppTheme;
 import com.example.secureshelledmessenger.ui.home.MainController;
 
@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private String userID;
 
     //Dummy data container (will change)
-    ArrayList<User> users;
+//    ArrayList<User> users;
     EditText usernameField;
     EditText passwordField;
     Button submitButton;
@@ -56,11 +56,11 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //Initiate Dummy Data (can Add,Delete,Edit these lines)
-        users = new ArrayList<>();
-        users.add(new User((long)0,"default","default",new ArrayList<>()));
-        users.add(new User((long)1,"David","D123",new ArrayList<>()));
-        users.add(new User((long)2,"Caleb","C123",new ArrayList<>()));
-        users.add(new User((long)3,"Mario","M123",new ArrayList<>()));
+//        users = new ArrayList<>();
+//        users.add(new User((long)0,"default","default",new ArrayList<>()));
+//        users.add(new User((long)1,"David","D123",new ArrayList<>()));
+//        users.add(new User((long)2,"Caleb","C123",new ArrayList<>()));
+//        users.add(new User((long)3,"Mario","M123",new ArrayList<>()));
 
         usernameField = findViewById(R.id.username_field);
         passwordField = findViewById(R.id.password_field);
@@ -91,12 +91,17 @@ public class LoginActivity extends AppCompatActivity {
                             public void run() {
                                 userID = loginCheckResult;
                                 System.out.println("Login Check Result (User ID): " + loginCheckResult);
-
-                                if(userID != null){
-                                    SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                                    editor.putLong("userID",Long.parseLong(userID));
-                                    editor.apply();
+                                System.out.println(loginCheckResult.getClass());
+                                if(userID != null && !userID.isEmpty()){
+//                                    SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
+//                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+//                                    editor.putString("username",username);
+//                                    editor.putString("password",password);
+//                                    editor.putLong("userID",Long.parseLong(userID));
+//                                    editor.apply();
+                                    mainController.updatePassword(password);
+                                    mainController.updateUsername(username);
+                                    mainController.updateUserID(Long.parseLong(userID));
                                     goToMainActivity();
                                     return;
                                 }

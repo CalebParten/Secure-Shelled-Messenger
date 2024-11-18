@@ -19,12 +19,13 @@ import com.example.secureshelledmessenger.MainActivity;
 import com.example.secureshelledmessenger.R;
 import com.example.secureshelledmessenger.adapter.ContactAdapter;
 import com.example.secureshelledmessenger.model.Contact;
-import com.example.secureshelledmessenger.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContactListFragment extends Fragment {
+
+    private MainController mainController = MainController.getInstance(this.getContext());
 
     private ContactAdapter adapter;
     private ArrayList<Contact> contactList;
@@ -37,11 +38,7 @@ public class ContactListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getActivity() != null && getActivity() instanceof MainActivity) {
-            mainActivity = (MainActivity) getActivity();
-            User user = mainActivity.getGlobalUser();
-            contactList = user.getContacts();
-        }
+        contactList = mainController.getContactsList();
     }
 
     @Override
@@ -84,8 +81,7 @@ public class ContactListFragment extends Fragment {
         super.onResume();
         if (getActivity() != null && getActivity() instanceof MainActivity) {
             mainActivity = (MainActivity) getActivity();
-            User user = mainActivity.getGlobalUser();
-            contactList = user.getContacts();
+            contactList = mainController.getContactsList();
             adapter.notifyDataSetChanged();
         }
     }

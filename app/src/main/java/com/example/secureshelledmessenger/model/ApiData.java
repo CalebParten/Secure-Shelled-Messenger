@@ -19,6 +19,30 @@ public class ApiData {
     private ApiData(Context context){
         this.messages = new ArrayList<>();
         this.httpClient = new OkHttpClient();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+//                requestCreateUser("Mary","m");
+                Long newID = Long.parseLong(requestLookupUser("Mary"));
+                Long loggedID = Long.parseLong(requestLookupUser("David"));
+//                sendMessage(loggedID,newID,"Hello Mary","D123");
+//                sendMessage(loggedID,newID,"How are you?","D123");
+//                sendMessage(newID,loggedID,"Good, yourself?","m");
+//                sendMessage(loggedID,newID,"good","D123");
+//                sendMessage(newID,loggedID,"Glad to hear","m");
+//                deleteMessage(loggedID,9,"D123");
+//                deleteMessage(loggedID,10,"D123");
+//                deleteMessage(loggedID,11,"D123");
+//                deleteMessage(loggedID,12,"D123");
+//                deleteMessage(loggedID,13,"D123");
+//                deleteMessage(loggedID,14,"D123");
+//                deleteMessage(loggedID,15,"D123");
+            }
+
+        }).start();
+
+
     }
 
     public static ApiData getInstance(Context context){
@@ -29,69 +53,52 @@ public class ApiData {
     }
 
     public String requestLookupUser(String username){
-        String reqURL = urlBase + "/lookup";
-        String payload = "{\"username\":\"" + username + "\"}";
-        RequestBody requestBody = RequestBody.create(payload,json);
-        Request request = new Request.Builder().url(reqURL).post(requestBody)
-                .addHeader("Content-Type","application/json").build();
-
-        try(Response response = httpClient.newCall(request).execute()){
-            if(response.isSuccessful() && response.body() != null){
-                return response.body().string();
-            }
-            else{
-                System.out.println("LookupUser Request Failed");
-                return null;
-            }
-        }
-        catch (IOException e){
-            System.out.println(e.toString());
-            return null;
-        }
+        return ApiClient.lookupUser(username);
     }
 
     public String requestCreateUser(String username, String password){
-        String reqURL = urlBase + "/create";
-        String payload = "{\"username\":\"" + username + "\", \"password\":\"" + password + "\"}";
-        RequestBody requestBody = RequestBody.create(payload,json);
-        Request request = new Request.Builder().url(reqURL).post(requestBody)
-                .addHeader("Content-Type", "application/json").build();
-
-        try(Response response = httpClient.newCall(request).execute()){
-            if(response.isSuccessful() && response.body() != null){
-                return response.body().string();
-            }
-            else{
-                System.out.println("Create User Request Failed");
-                return null;
-            }
-        }
-        catch (IOException e){
-            System.out.println(e.toString());
-            return null;
-        }
+        return ApiClient.createUser(username,password);
     }
 
     public String requestLogin(String username, String password){
-        String reqURL = urlBase + "/login";
-        String payload = "{\"username\":\"" + username + "\", \"password\":\"" + password + "\"}";
-        RequestBody requestBody = RequestBody.create(payload,json);
-        Request request = new Request.Builder().url(reqURL).post(requestBody)
-                .addHeader("Content-Type", "application/json").build();
-
-        try(Response response = httpClient.newCall(request).execute()){
-            if(response.isSuccessful() && response.body() != null){
-                return response.body().string();
-            }
-            else{
-                System.out.println("Create User Request Failed");
-                return null;
-            }
-        }
-        catch (IOException e){
-            System.out.println(e.toString());
-            return null;
-        }
+        return ApiClient.login(username,password);
     }
+
+    public boolean deleteUser(String username, String password){
+        return ApiClient.deleteUser(username,password);
+    }
+
+    public ArrayList<Message> getConversation(long senderID, long receiverID, String password){
+        return new ArrayList<>(ApiClient.getConversation(senderID,receiverID,password));
+    }
+
+    public ArrayList<Message> getReceivedMessages(long userID, String password){
+        return new ArrayList<>(ApiClient.getReceivedMessages(userID,password));
+    }
+
+    public ArrayList<Message> getSentMessages(long userID, String password){
+        return new ArrayList<>(ApiClient.getSentMessages(userID, password));
+    }
+
+    public Message sendMessage(long senderID, long receiverID, String content, String password) {
+        return ApiClient.sendMessage(senderID,receiverID,content,password);
+    }
+
+    public String editUsername(long userId, String password, String newUsername){
+        return ApiClient.editUsername(userId,password,newUsername);
+    }
+
+    public String editPassword(long userId, String password, String newPassword){
+        return ApiClient.editPassword(userId, password, newPassword);
+    }
+
+    public Boolean deleteMessage(long userId, long messageId, String password){
+        return ApiClient.deleteMessage(userId, messageId, password);
+    }
+
+    public Long getContactID(String username){
+        return Long.parseLong(ApiClient.lookupUser(username));
+    }
+
 
 }

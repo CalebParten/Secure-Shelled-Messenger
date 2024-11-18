@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.secureshelledmessenger.model.Contact;
-import com.example.secureshelledmessenger.model.User;
+//import com.example.secureshelledmessenger.model.User;
 import com.example.secureshelledmessenger.ui.home.MainController;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private AppTheme currentTheme; // Change to AppTheme type
     private Long userID;
-    private User user;
+//    private User user;
     private MainController mainController;
 
     @Override
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mainController = MainController.getInstance(this);
+        mainController.getUserContacts();
 
         SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
 
@@ -64,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
 //                mainController.createUser("David","D123");
                 mainController.getUserString("David");
+                System.out.println(mainController.getCurrentPassword());
+                System.out.println(mainController.getCurrentUserID());
+                System.out.println(mainController.getCurrentUsername());
             }
         }).start();
     }
@@ -90,27 +94,6 @@ public class MainActivity extends AppCompatActivity {
             // Recreate the activity to apply the new theme
             recreate(); // Consider commenting this out for a smoother experience
         }
-    }
-
-    public User getGlobalUser(){
-        //For now contacts is dummy data, future it will be gathered from database
-        ArrayList<Contact> contacts = mainController.getContactsList();
-        user = new User(userID,"","",contacts);
-        return user;
-    }
-
-    public void addGlobalUserContact(Contact contact){
-        user.addContact(contact);
-        System.out.println(user.getContacts());
-    }
-
-    public void updateGlobalUserContacts(){
-        ArrayList<Contact> updatedContacts = mainController.getContactsList();
-        user.setContacts(updatedContacts);
-    }
-
-    public void replaceGlobalUserContact(int position, Contact contact){
-        user.getContacts().set(position,contact);
     }
 
     @Override

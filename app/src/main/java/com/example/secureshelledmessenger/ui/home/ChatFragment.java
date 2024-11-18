@@ -90,4 +90,6 @@ public class ChatFragment extends Fragment {
         messageList.add(new Message((long)0,"Good and you?",(long)1,(long)0,LocalDateTime.now()));
         messageList.add(new Message((long)0,"Good",(long)0,(long)1,LocalDateTime.now()));
     }
+
+
 }

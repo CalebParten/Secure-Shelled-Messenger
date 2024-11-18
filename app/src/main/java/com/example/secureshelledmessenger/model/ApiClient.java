@@ -66,9 +66,9 @@ public class ApiClient {
         return sendRequest("/api/users/editPassword", jsonInput);
     }
 
-    public static boolean deleteUser(long userId, String password) {
+    public static boolean deleteUser(String username, String password) {
         // Step 1: Check if user exists
-        String lookupResponse = sendRequest("/api/users/lookup", String.format("{\"username\":\"%d\"}", userId));
+        String lookupResponse = sendRequest("/api/users/lookup", String.format("{\"username\":\"%s\"}", username));
     
         if (lookupResponse == null || lookupResponse.isEmpty()) {
             System.out.println("User does not exist.");
@@ -76,7 +76,7 @@ public class ApiClient {
         }
     
         // Step 2: Attempt to delete user
-        String deleteResponse = sendRequest("/api/users/delete", String.format("{\"id\":%d, \"password\":\"%s\"}", userId, password));
+        String deleteResponse = sendRequest("/api/users/delete", String.format("{\"id\":%s, \"password\":\"%s\"}", lookupResponse, password));
     
         if (deleteResponse == null) {
             return false;

@@ -5,7 +5,10 @@ import android.content.Context;
 import com.example.secureshelledmessenger.model.ApiData;
 import com.example.secureshelledmessenger.model.Contact;
 import com.example.secureshelledmessenger.model.ContactData;
+import com.example.secureshelledmessenger.model.Message;
+import com.example.secureshelledmessenger.model.UserData;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainController {
@@ -13,10 +16,12 @@ public class MainController {
     private static MainController mainController;
     private static ContactData contactDataModel;
     private static ApiData apiDataModel;
+    private static UserData userData;
 
     private MainController(Context context){
         contactDataModel = ContactData.getInstance(context);
         apiDataModel = ApiData.getInstance(context);
+        userData = UserData.getInstance(context);
     }
 
     public static MainController getInstance(Context context){
@@ -53,6 +58,7 @@ public class MainController {
         System.out.println("Request Result: " + apiDataModel.requestLookupUser(username));
     }
 
+    //Api Model interaction
     public void createUser(String username, String password){
         System.out.println("Create User Result: " + apiDataModel.requestCreateUser(username, password));
     }
@@ -60,4 +66,64 @@ public class MainController {
     public String checkLogin(String username, String password){
         return apiDataModel.requestLogin(username,password);
     }
+
+    public boolean deleteUser(String username, String password){
+        return apiDataModel.deleteUser(username,password);
+    }
+
+    public ArrayList<Message> getConversation(long senderID, long receiverID){
+        return apiDataModel.getConversation(senderID,receiverID,getCurrentPassword());
+    }
+
+    public ArrayList<Message> getReceivedMessages(long userID){
+        return apiDataModel.getReceivedMessages(userID,getCurrentPassword());
+    }
+
+    public ArrayList<Message> getSentMessages(long userID){
+        return apiDataModel.getSentMessages(userID,getCurrentPassword());
+    }
+
+    public Long getContactID(String username){
+        return apiDataModel.getContactID(username);
+    }
+
+
+    //User model interaction
+    public void updateUsername(String username){
+        userData.setUsername(username);
+    }
+
+    public void updatePassword(String password){
+        userData.setPassword(password);
+    }
+
+    public void updateUserID(Long userid){
+        userData.setUserid(userid);
+    }
+
+    public void updateContacts(ArrayList<Contact> contacts){
+        userData.setContacts(contacts);
+    }
+
+    public String getCurrentUsername(){
+        return userData.getUsername();
+    }
+
+    public String getCurrentPassword(){
+        return userData.getPassword();
+    }
+
+    public Long getCurrentUserID(){
+        return userData.getUserid();
+    }
+
+    public void getUserContacts(){
+        contactDataModel.initiateContacts();
+    }
+//    public ArrayList<Contact> getCurrentContacts(){
+//        return userData.getContacts();
+//    }
+
+
+
 }

@@ -25,8 +25,14 @@ import java.util.List;
 
 public class ContactFragment extends Fragment {
 
+    private MainController mainController;
+
     private Contact contact;
     private List<Message> messageList;
+    private Long contactID;
+
+    private RecyclerView recyclerView;
+    private MessageAdapter messageAdapter;
 
     private TextView contactName;
     private TextView privateKey;
@@ -40,6 +46,7 @@ public class ContactFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mainController = MainController.getInstance(this.getContext());
         Bundle bundle = getArguments();
         if(bundle != null){
             contact = (Contact)bundle.getSerializable("contact");
@@ -56,16 +63,33 @@ public class ContactFragment extends Fragment {
         privateKey = view.findViewById(R.id.private_key);
         messageInput = view.findViewById(R.id.message_input);
 
-        messageList = new ArrayList<>();
-        loadDummyMessages();
+//        messageList = new ArrayList<>();
 
         contactName.setText(contact.getName());
         privateKey.setText(contact.getAssignedKey());
 
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_messages);
-        MessageAdapter messageAdapter = new MessageAdapter(messageList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(messageAdapter);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Long id = mainController.getContactID(contact.getUsername());
+                ArrayList<Message> newMessages = mainController.getConversation(mainController.getCurrentUserID(), id);
+                System.out.println(mainController.getReceivedMessages(mainController.getCurrentUserID()));
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        messageList = newMessages;
+                        System.out.println(messageList);
+                        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_messages);
+                        messageAdapter = new MessageAdapter(messageList);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        recyclerView.setAdapter(messageAdapter);
+                        contactID = id;
+                    }
+                });
+            }
+        }).start();
 
         messageInput = view.findViewById(R.id.message_input);
         sendButton = view.findViewById(R.id.btn_send_message);
@@ -73,7 +97,13 @@ public class ContactFragment extends Fragment {
         sendButton.setOnClickListener(v -> {
             String messageContent = messageInput.getText().toString();
             if(!messageContent.isEmpty()){
-                Message message = new Message((long)0,messageContent, (long)0,(long)1,LocalDateTime.now());
+                Message message = new Message(
+                        (long)0,
+                        messageContent,
+                        mainController.getCurrentUserID(),
+                        contactID,
+                        LocalDateTime.now());
+
                 messageList.add(message);
                 messageInput.setText("");
                 messageAdapter.notifyDataSetChanged();
@@ -88,6 +118,9 @@ public class ContactFragment extends Fragment {
         messageList.add(new Message((long)0,"Are you coming to the party?", (long)0,(long)1, LocalDateTime.now()));
         // Add more dummy messages as needed
     }
+
+
+
 
 
 }

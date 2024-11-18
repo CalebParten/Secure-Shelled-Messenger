@@ -96,7 +96,7 @@ public class ContactEditFragment extends Fragment {
                 if(action.equals("create")){
 //                    Contact newContact = new Contact(name,username,key);
                     mainController.addContact(name,username,key);
-                    mainActivity.updateGlobalUserContacts();
+//                    mainActivity.updateGlobalUserContacts();
 //                    mainActivity.addGlobalUserContact(newContact);
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     fragmentManager.popBackStack();
@@ -105,7 +105,7 @@ public class ContactEditFragment extends Fragment {
                 else if(action.equals("edit")){
                     Contact updatedContact = new Contact(name,username,key);
                     mainController.editContact(name,username,key);
-                    mainActivity.updateGlobalUserContacts();
+//                    mainActivity.updateGlobalUserContacts();
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     fragmentManager.popBackStack();
                 }
