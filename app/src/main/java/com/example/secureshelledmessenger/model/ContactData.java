@@ -83,6 +83,7 @@ public class ContactData {
         contacts.add(new Contact("Caleb","C234","c"));
         contacts.add(new Contact("Mario","M345","m"));
         contacts.add(new Contact("John","J456","j"));
+        contacts.add(new Contact("Mary","Mary","m"));
     }
 
 

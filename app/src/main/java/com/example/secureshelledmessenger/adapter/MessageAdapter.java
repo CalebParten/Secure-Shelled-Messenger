@@ -18,11 +18,13 @@ import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
     private List<Message> messages;
+    private String contactName;
     private MainController mainController;
 
 
-    public MessageAdapter(List<Message> messages) {
+    public MessageAdapter(List<Message> messages, String contactName) {
         this.messages = messages;
+        this.contactName = contactName;
     }
 
     @NonNull
@@ -41,10 +43,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.senderTextView.setText(String.valueOf(message.getSenderId()));
         holder.contentTextView.setText(message.getContent());
         if(message.getSenderId() == mainController.getCurrentUserID()){
+            holder.senderTextView.setText(mainController.getCurrentUsername());
             holder.itemView.setTranslationX(400);
             holder.itemView.setBackgroundResource(R.drawable.background_message_item);
         }
         else{
+            holder.senderTextView.setText(contactName);
             holder.itemView.setBackgroundResource(R.drawable.background_sender_message_item);
         }
     }

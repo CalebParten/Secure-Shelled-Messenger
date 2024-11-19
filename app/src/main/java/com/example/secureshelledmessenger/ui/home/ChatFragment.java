@@ -62,7 +62,7 @@ public class ChatFragment extends Fragment {
         contactName.setText(contact.getName());
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_messages);
-        MessageAdapter messageAdapter = new MessageAdapter(messageList);
+        MessageAdapter messageAdapter = new MessageAdapter(messageList,contact.getName());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(messageAdapter);
 
