@@ -50,8 +50,12 @@ public class MainController {
         return contactDataModel.getContacts();
     }
 
-    public void deleteContact(int position){
-        contactDataModel.deleteContact(position);
+    public void deleteContactByIndex(int position){
+        contactDataModel.deleteContactByIndex(position);
+    }
+
+    public void deleteContactByUsername(String username){
+        contactDataModel.deletetContactByUsername(username);
     }
 
     public void getUserString(String username){
@@ -87,6 +91,9 @@ public class MainController {
         return apiDataModel.getContactID(username);
     }
 
+    public void sendMessage(long senderID, long receiverID, String content, String password, String key){
+        apiDataModel.sendMessage(senderID,receiverID,content,password,key);
+    }
 
     //User model interaction
     public void updateUsername(String username){
@@ -120,10 +127,5 @@ public class MainController {
     public void getUserContacts(){
         contactDataModel.initiateContacts();
     }
-//    public ArrayList<Contact> getCurrentContacts(){
-//        return userData.getContacts();
-//    }
-
-
 
 }

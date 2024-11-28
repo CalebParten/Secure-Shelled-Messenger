@@ -10,12 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.secureshelledmessenger.model.Contact;
 import com.example.secureshelledmessenger.model.Message;
 import com.example.secureshelledmessenger.adapter.MessageAdapter;
 import com.example.secureshelledmessenger.R;
+
+import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -25,8 +28,18 @@ import java.util.List;
 public class ChatFragment extends Fragment {
     private static final String ARG_CONTACT = "contact";
 
+    private MainController mainController;
+
     private Contact contact;
     private List<Message> messageList;
+    private Long contactID;
+
+    private MessageAdapter messageAdapter;
+
+    private TextView contactName;
+    private TextView privateKey;
+    private EditText messageInput;
+    private Button sendButton;
 
     public ChatFragment() {
     }
@@ -42,6 +55,7 @@ public class ChatFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mainController = MainController.getInstance(this.getContext());
         if (getArguments() != null) {
             contact = (Contact) getArguments().getSerializable(ARG_CONTACT);
             if (contact == null) {
@@ -55,30 +69,77 @@ public class ChatFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
-        TextView contactName = view.findViewById(R.id.new_contact_name);
-        messageList = new ArrayList<>();
-        loadDummyMessages();
+        contactName = view.findViewById(R.id.new_contact_name);
+//        privateKey = view.findViewById(R.id.private_key);
+        messageInput = view.findViewById(R.id.message_input);
+        System.out.println(contact.getAssignedKey());
+
+//        messageList = new ArrayList<>();
+//        loadDummyMessages();
 
         contactName.setText(contact.getName());
+//        privateKey.setText(contact.getAssignedKey());
 
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_messages);
-        MessageAdapter messageAdapter = new MessageAdapter(messageList,contact.getName());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(messageAdapter);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Long receiverID = mainController.getContactID(contact.getUsername());
+                ArrayList<Message> newMessages = mainController.getConversation(mainController.getCurrentUserID(), receiverID);
 
-        EditText messageInput = view.findViewById(R.id.message_input);
-        Button sendButton = view.findViewById(R.id.send_button);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        messageList = newMessages;
+
+                        for(Message message: messageList){
+                            System.out.println(message.getTimestamp());
+                        }
+
+                        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_messages);
+                        messageAdapter = new MessageAdapter(messageList, contact.getName());
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        recyclerView.setAdapter(messageAdapter);
+
+                        contactID = receiverID;
+                    }
+                });
+            }
+        }).start();
+
+        messageInput = view.findViewById(R.id.message_input);
+        sendButton = view.findViewById(R.id.send_button);
+
 
         sendButton.setOnClickListener(v -> {
             String messageContent = messageInput.getText().toString();
             if (!messageContent.isEmpty()) {
-                Message message = new Message((long)0,messageContent, ((long)0), (long)0,LocalDateTime.now());
-                messageList.add(message);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        mainController.sendMessage(mainController.getCurrentUserID(),
+                                contactID, messageContent,
+                                mainController.getCurrentPassword(),
+                                contact.getAssignedKey());
+
+                        ArrayList<Message> updatedMessages = mainController.getConversation(
+                                mainController.getCurrentUserID(), contactID);
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                messageList.clear();
+                                messageList.addAll(updatedMessages);
+                                messageAdapter.notifyDataSetChanged();
+                                System.out.println("message sent");
+                            }
+                        });
+                    }
+                }).start();
                 messageInput.setText("");
-                messageAdapter.notifyDataSetChanged();
             }
         });
-
         return view;
     }
 

@@ -43,7 +43,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.senderTextView.setText(String.valueOf(message.getSenderId()));
         holder.contentTextView.setText(message.getContent());
         if(message.getSenderId() == mainController.getCurrentUserID()){
-            holder.senderTextView.setText(mainController.getCurrentUsername());
+            holder.senderTextView.setText("You");
             holder.itemView.setTranslationX(400);
             holder.itemView.setBackgroundResource(R.drawable.background_message_item);
         }

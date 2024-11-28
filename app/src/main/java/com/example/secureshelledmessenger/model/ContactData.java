@@ -1,6 +1,7 @@
 package com.example.secureshelledmessenger.model;
 
 import android.content.Context;
+import android.util.Pair;
 
 import com.example.secureshelledmessenger.libraries.TinyDB;
 import com.example.secureshelledmessenger.ui.home.MainController;
@@ -12,13 +13,21 @@ import java.util.ArrayList;
 public class ContactData {
 
     private static ContactData contactData;
+    private ApiData apiData;
+    private UserData userData;
+    private Context context;
+
     private ArrayList<Contact> contacts;
+    private ArrayList<Pair<String,String>> recentContactMessages;
     private TinyDB tinyDB;
 
 
     private ContactData(Context context){
         this.contacts = new ArrayList<>();
         this.tinyDB = new TinyDB(context);
+        apiData = ApiData.getInstance(context);
+        userData = UserData.getInstance(context);
+        this.context = context;
     }
 
     public static ContactData getInstance(Context context){
@@ -36,16 +45,15 @@ public class ContactData {
     }
 
     public void editContact(String newName, String username, String newKey){
-        for(int i = 0; i < contacts.size(); i++){
 
-            Contact currentContact = contacts.get(i);
-            if(currentContact.getUsername().equals(username)){
-                currentContact.setName(newName);
-                currentContact.setAssignedKey(newKey);
+        for(Contact contact: contacts){
+            if(contact.getUsername().equals(username)){
+                contact.setName(newName);
+                contact.setAssignedKey(newKey);
                 saveContacts();
-                return;
             }
         }
+
     }
 
     public ArrayList<Contact> getContacts(){
@@ -65,17 +73,40 @@ public class ContactData {
         tinyDB.putString(MainController.getInstance().getCurrentUsername(), contactsString);
     }
 
-    public void deleteContact(int position){
+    public void deleteContactByIndex(int position){
         contacts.remove(position);
         saveContacts();
     }
 
-    public void initiateContacts(){
-        if(getContacts().isEmpty()){
-            loadDummyContacts();
-            saveContacts();
+    public void deletetContactByUsername(String username){
+
+        for(int index = 0; index < contacts.size(); index++){
+
+            Contact currentContact = contacts.get(index);
+
+            if(currentContact.getUsername().equals(username)){
+                contacts.remove(index);
+                saveContacts();
+            }
         }
+    }
+
+    public void deleteAllContacts(){
+        contacts.clear();
+        saveContacts();
+    }
+
+    public void initiateContacts(){
+//        if(getContacts().isEmpty()){
+////            loadDummyContacts();
+////            saveContacts();
+//        }
         getContacts();
+    }
+
+
+    public void setRecentContactMessages(ArrayList<Pair<String,String>> recentContactMessages){
+        this.recentContactMessages = recentContactMessages;
     }
 
     public void loadDummyContacts(){

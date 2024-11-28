@@ -67,23 +67,21 @@ public class ContactListFragment extends Fragment {
                 goToCreateContact(view);
             }
         });
-        for(Contact contact: contactList){
-            System.out.println(contact.getName());
-        }
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_contacts);
-        adapter = new ContactAdapter(contactList, requireActivity()); // Pass the activity reference
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//        for(Contact contact: contactList){
+//            System.out.println(contact.getName());
+//        }
+//        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_contacts);
+//        adapter = new ContactAdapter(contactList, requireActivity()); // Pass the activity reference
+//        recyclerView.setAdapter(adapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (getActivity() != null && getActivity() instanceof MainActivity) {
-            mainActivity = (MainActivity) getActivity();
-            contactList = mainController.getContactsList();
-            adapter.notifyDataSetChanged();
-        }
+        mainActivity = (MainActivity) getActivity();
+        contactList = mainController.getContactsList();
+        adapter.notifyDataSetChanged();
     }
 
     public void goToCreateContact(View view){

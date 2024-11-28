@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLOutput;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -90,10 +91,14 @@ public class ApiClient {
         }
     }
 
-    public static Message sendMessage(long senderId, long receiverId, String content, String password) {
-        String jsonInputString = "{\"senderId\":" + senderId + ", \"receiverId\":" + receiverId + ", \"content\":\"" + content + "\", \"password\":\"" + password + "\"}";
-        String response = sendRequest("/api/messages/send", jsonInputString);
+    public static Message sendMessage(long senderId, long receiverId, String content, String password, String key) {
+        String jsonInputString = "{\"senderId\":" + senderId +
+                ", \"receiverId\":" + receiverId +
+                ", \"content\":\"" + encryptMessage(content,key) +
+                "\", \"password\":\"" + password + "\"}";
 
+        String response = sendRequest("/api/messages/send", jsonInputString);
+        System.out.println(response);
         if (response == null || response.isEmpty()) {
             return null;
         }
@@ -255,5 +260,14 @@ public class ApiClient {
             return null;
         }
     }
+
+    /*
+    Returns the encrypted message
+     */
+    public static String encryptMessage(String message, String key){
+        System.out.println("Encrypting with key " + key);
+        return message;
+    }
+
 
 }

@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ContactFragment extends Fragment {
@@ -74,13 +76,14 @@ public class ContactFragment extends Fragment {
             public void run() {
                 Long id = mainController.getContactID(contact.getUsername());
                 ArrayList<Message> newMessages = mainController.getConversation(mainController.getCurrentUserID(), id);
-                System.out.println(mainController.getReceivedMessages(mainController.getCurrentUserID()));
 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         messageList = newMessages;
-                        System.out.println(messageList);
+                        for(Message message: messageList){
+                            System.out.println(message.getTimestamp());
+                        }
                         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_messages);
                         messageAdapter = new MessageAdapter(messageList,contact.getName());
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -97,16 +100,29 @@ public class ContactFragment extends Fragment {
         sendButton.setOnClickListener(v -> {
             String messageContent = messageInput.getText().toString();
             if(!messageContent.isEmpty()){
-                Message message = new Message(
-                        (long)0,
-                        messageContent,
-                        mainController.getCurrentUserID(),
-                        contactID,
-                        LocalDateTime.now());
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("entered new thread");
+                        mainController.sendMessage(mainController.getCurrentUserID(),
+                                contactID, messageContent,
+                                mainController.getCurrentPassword(),
+                                "test_key");
+                        ArrayList<Message> updatedMessages = mainController.getConversation(
+                                mainController.getCurrentUserID(), contactID);
 
-                messageList.add(message);
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                messageList.clear();
+                                messageList.addAll(updatedMessages);
+                                messageAdapter.notifyDataSetChanged();
+                                System.out.println("message sent");
+                            }
+                        });
+                    }
+                }).start();
                 messageInput.setText("");
-                messageAdapter.notifyDataSetChanged();
             }
         });
         return view;

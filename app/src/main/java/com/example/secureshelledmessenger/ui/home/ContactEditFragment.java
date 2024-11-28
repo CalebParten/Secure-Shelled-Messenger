@@ -28,6 +28,7 @@ public class ContactEditFragment extends Fragment {
     private EditText userField;
     private EditText keyField;
     private Button submitButton;
+    private Button deleteButton;
 
     private Contact contact;
     private String action;
@@ -52,9 +53,7 @@ public class ContactEditFragment extends Fragment {
         if(bundle != null){
             contact = (Contact)bundle.getSerializable("contact");
             action = bundle.getString("action");
-            if(action.equals("edit")){
-                position = bundle.getInt("position");
-            }
+            position = bundle.getInt("position");
         }
 
         mainController = MainController.getInstance(mainActivity.getApplicationContext());
@@ -76,6 +75,7 @@ public class ContactEditFragment extends Fragment {
         userField = view.findViewById(R.id.new_contact_user_field);
         keyField = view.findViewById(R.id.private_key);
         submitButton = view.findViewById(R.id.submit_button);
+        deleteButton = view.findViewById(R.id.delete_button);
 
         if(action.equals("edit")){
             nameField.setText(contact.getName());
@@ -83,6 +83,27 @@ public class ContactEditFragment extends Fragment {
             userField.setText(String.valueOf(contact.getUsername()));
             userField.setEnabled(false);
         }
+        if(action.equals("create")){
+            deleteButton.setText("Cancel");
+            submitButton.setText("Submit");
+        }
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(deleteButton.getText().toString().equals("Cancel")){
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    fragmentManager.popBackStack();
+                }
+                if(deleteButton.getText().toString().equals("Delete")){
+                    mainController.deleteContactByUsername(contact.getUsername());
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    fragmentManager.popBackStack();
+                }
+
+            }
+        });
 
 
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -94,18 +115,30 @@ public class ContactEditFragment extends Fragment {
                 String key = keyField.getText().toString();
 
                 if(action.equals("create")){
-//                    Contact newContact = new Contact(name,username,key);
-                    mainController.addContact(name,username,key);
-//                    mainActivity.updateGlobalUserContacts();
-//                    mainActivity.addGlobalUserContact(newContact);
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    fragmentManager.popBackStack();
 
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            long checkedID = mainController.getContactID(username);
+
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(checkedID > 0){
+                                        mainController.addContact(name,username,key);
+                                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                        fragmentManager.popBackStack();
+                                    }
+                                    else{
+                                        userField.setError("This username does not exist");
+                                    }
+                                }
+                            });
+                        }
+                    }).start();
                 }
                 else if(action.equals("edit")){
-                    Contact updatedContact = new Contact(name,username,key);
                     mainController.editContact(name,username,key);
-//                    mainActivity.updateGlobalUserContacts();
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     fragmentManager.popBackStack();
                 }

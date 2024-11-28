@@ -12,7 +12,6 @@
         android:id="@+id/new_contact_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
         android:textColor="?attr/colorOnBackground"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,23 +19,24 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/contact_phone"
+        android:id="@+id/private_key_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
+        android:layout_marginStart="40dp"
         android:textColor="?attr/colorOnBackground"
-        android:textSize="14sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/new_contact_name" />
 
-    <ImageView
-        android:id="@+id/options_image"
-        android:layout_width="30dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="10dp"
-        app:layout_constraintStart_toEndOf="@+id/new_contact_name"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/options_no_circle" />
+    <TextView
+        android:id="@+id/key_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Key:"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/private_key_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_contact_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
