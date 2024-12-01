@@ -149,8 +149,9 @@ public class ApiData {
     }
 
     public Message decryptMessage(Message message, String key){
+        System.out.println("decrypting .. . ");
         String encryptedContent = message.getContent();
-        String decryptedContent = ApiClient.encryptMessage(encryptedContent,key);
+        String decryptedContent = ApiClient.decryptMessage(encryptedContent,key);
         return new Message(message.getId(),
                 decryptedContent,
                 message.getSenderId(),

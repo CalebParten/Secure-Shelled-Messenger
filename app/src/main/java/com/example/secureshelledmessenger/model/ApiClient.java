@@ -265,8 +265,11 @@ public class ApiClient {
     Returns the encrypted message
      */
     public static String encryptMessage(String message, String key){
-        System.out.println("Encrypting with key " + key);
-        return message;
+        return Encryption.encryptMessage(message,key);
+    }
+
+    public static String decryptMessage(String message, String key){
+        return Encryption.decryptMessage(message,key);
     }
 
 

@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         };
         recentMessageHandler.post(recentMessageRunnable);
 
+        initiateNotifyWorker();
 //        notifyRunnable = new Runnable() {
 //            @Override
 //            public void run() {
@@ -156,8 +157,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initiateNotifyWorker(){
-        OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(NotificationWorker.class).build();
-        WorkManager.getInstance(this).enqueue(oneTimeWorkRequest);
+        PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(NotificationWorker.class,
+                15,TimeUnit.MINUTES).build();
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork("checkNotifications",
+                ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,periodicWorkRequest);
     }
 
     public void buildNotifChannel(){
