@@ -109,6 +109,10 @@ public class ChatFragment extends Fragment {
                                     messageList.clear();
                                     messageList.addAll(newMessages);
                                     messageAdapter.notifyDataSetChanged();
+                                    int lastMessagePosition = messageAdapter.getItemCount() - 1;
+                                    if(lastMessagePosition > -1){
+                                        recyclerView.smoothScrollToPosition(lastMessagePosition);
+                                    }
                                     contactID = receiverID;
                                 }
                             });
@@ -147,6 +151,10 @@ public class ChatFragment extends Fragment {
                                 messageList.clear();
                                 messageList.addAll(updatedMessages);
                                 messageAdapter.notifyDataSetChanged();
+                                int lastMessagePosition = messageAdapter.getItemCount() - 1;
+                                if(lastMessagePosition > -1){
+                                    recyclerView.smoothScrollToPosition(lastMessagePosition);
+                                }
                                 System.out.println("message sent");
 
                             }

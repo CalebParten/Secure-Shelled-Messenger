@@ -33,8 +33,8 @@ public class ApiData {
 //                requestCreateUser("Mark","m24");
 
 
-                Long newID = Long.parseLong(requestLookupUser("Mary"));
-                Long loggedID = Long.parseLong(requestLookupUser("David"));
+//                Long newID = Long.parseLong(requestLookupUser("Mary"));
+//                Long loggedID = Long.parseLong(requestLookupUser("David"));
 //                sendMessage(newID,loggedID,"I am good", "m","test_key");
 //                deleteMessagesBetweenUsers(loggedID,newID,"D123","m");
 //                sendMessage(newID,loggedID,"This is a test of encrypt method","m");

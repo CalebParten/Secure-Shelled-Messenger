@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -49,8 +50,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(!hasNotifPermission() && !hasInternetPermission()){
-            requestPermissions();
+        if(!hasNotifPermission()){
+            requestNotificationPermssion();
         }
 
         mainController = MainController.getInstance(this);
@@ -151,7 +152,26 @@ public class LoginActivity extends AppCompatActivity {
                 Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED);
     }
 
-    private void requestPermissions(){
-        ActivityCompat.requestPermissions(this,permissions,1);
+//    private void requestPermissions(){
+//        ActivityCompat.requestPermissions(this,permissions,1);
+//    }
+
+    private void requestNotificationPermssion(){
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.POST_NOTIFICATIONS},1);
+    }
+
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == 1){
+            for(int i = 0; i < permissions.length; i++){
+                if(grantResults[i] != PackageManager.PERMISSION_GRANTED){
+                    requestNotificationPermssion();
+                }
+
+            }
+        }
     }
 }

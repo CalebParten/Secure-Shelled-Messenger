@@ -83,20 +83,20 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 System.out.println("updating recent messages");
                 initiateCheckMessageWorker();
-                recentMessageHandler.postDelayed(this, 10000);
+                recentMessageHandler.postDelayed(this, 100000);
             }
         };
         recentMessageHandler.post(recentMessageRunnable);
 
-        notifyRunnable = new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("checking to notify");
-                initiateNotifyWorker();
-                notifyHandler.postDelayed(this,20000);
-            }
-        };
-        notifyHandler.post(notifyRunnable);
+//        notifyRunnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                System.out.println("checking to notify");
+//                initiateNotifyWorker();
+//                notifyHandler.postDelayed(this,20000);
+//            }
+//        };
+//        notifyHandler.post(notifyRunnable);
 
         new Thread(new Runnable() {
             @Override
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
         CharSequence channelName = "SSM";
         String description = "Notifications for Secure Shelled Messenger";
         int importanceLevel = NotificationManager.IMPORTANCE_DEFAULT;
-        NotificationChannel notificationChannel = new NotificationChannel("default",
+        NotificationChannel notificationChannel = new NotificationChannel("SSM_Channel",
                 channelName,importanceLevel);
         notificationChannel.setDescription(description);
 

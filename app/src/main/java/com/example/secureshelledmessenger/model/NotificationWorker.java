@@ -12,6 +12,7 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.example.secureshelledmessenger.R;
+import com.example.secureshelledmessenger.ui.home.ChatFragment;
 import com.example.secureshelledmessenger.ui.home.MainController;
 
 import java.lang.reflect.Array;
@@ -53,7 +54,8 @@ public class NotificationWorker extends Worker {
                             @Override
                             public void run() {
                                 buildNotification("New Message from " + contact.getUsername(),
-                                        lastMessage.getContent());
+                                        lastMessage.getContent(), (int) recieverID,
+                                        contact.getUsername());
                             }
                         });
                     } else {
@@ -69,13 +71,14 @@ public class NotificationWorker extends Worker {
         }
     }
 
-    public void buildNotification(String title, String content){
+    public void buildNotification(String title, String content, int id, String username){
+
         Notification notification = new Notification.Builder(getApplicationContext(), "default")
                 .setContentTitle(title).setContentText(content).setSmallIcon(R.drawable.ic_notifications_black_24dp).build();
 
         NotificationManager notificationManager = (NotificationManager) getApplicationContext()
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(1,notification);
+        notificationManager.notify(id,notification);
     }
 
 
