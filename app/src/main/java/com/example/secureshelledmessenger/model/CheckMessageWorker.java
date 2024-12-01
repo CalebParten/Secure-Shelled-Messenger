@@ -46,7 +46,7 @@ public class CheckMessageWorker extends Worker {
                             @Override
                             public void run() {
                                 buildNotification("New Message from " + contact.getUsername(),
-                                        lastMessage.getContent(), (int) recieverID);
+                                        mainController.decryptMessage(lastMessage, contact.getAssignedKey()).getContent(), (int) recieverID);
                             }
                         });
                     }

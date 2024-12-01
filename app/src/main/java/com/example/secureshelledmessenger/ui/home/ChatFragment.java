@@ -140,6 +140,7 @@ public class ChatFragment extends Fragment {
                                 contactID, messageContent,
                                 mainController.getCurrentPassword(),
                                 contact.getAssignedKey());
+                        System.out.println("message sent with assigned key " + contact.getAssignedKey());
 
                         ArrayList<Message> updatedMessages = mainController.getConversation(
                                 mainController.getCurrentUserID(), contactID);

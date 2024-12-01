@@ -58,6 +58,8 @@ public class ContactData {
                 saveContacts();
             }
         }
+        contacts.clear();
+        contacts.addAll(getContacts());
 
     }
 
