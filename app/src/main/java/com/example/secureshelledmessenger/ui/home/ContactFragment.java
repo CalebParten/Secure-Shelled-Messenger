@@ -85,7 +85,7 @@ public class ContactFragment extends Fragment {
                             System.out.println(message.getTimestamp());
                         }
                         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_messages);
-                        messageAdapter = new MessageAdapter(messageList,contact.getName());
+                        messageAdapter = new MessageAdapter(messageList,contact.getName(),contact.getAssignedKey());
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         recyclerView.setAdapter(messageAdapter);
                         contactID = id;

@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 System.out.println("updating recent messages");
                 initiateCheckMessageWorker();
-                recentMessageHandler.postDelayed(this, 100000);
+                recentMessageHandler.postDelayed(this, 10000);
             }
         };
         recentMessageHandler.post(recentMessageRunnable);

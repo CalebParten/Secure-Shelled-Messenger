@@ -147,4 +147,14 @@ public class ApiData {
             return (long) -1;
         }
     }
+
+    public Message decryptMessage(Message message, String key){
+        String encryptedContent = message.getContent();
+        String decryptedContent = ApiClient.encryptMessage(encryptedContent,key);
+        return new Message(message.getId(),
+                decryptedContent,
+                message.getSenderId(),
+                message.getReceiverId(),
+                message.getTimestamp());
+    }
 }

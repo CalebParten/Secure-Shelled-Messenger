@@ -20,11 +20,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     private List<Message> messages;
     private String contactName;
     private MainController mainController;
+    private String key;
 
 
-    public MessageAdapter(List<Message> messages, String contactName) {
+    public MessageAdapter(List<Message> messages, String contactName, String contactKey) {
         this.messages = messages;
         this.contactName = contactName;
+        this.key = contactKey;
     }
 
     @NonNull
@@ -38,8 +40,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Message message = messages.get(position);
-
+        Message message = mainController.decryptMessage(messages.get(position),key);
+        System.out.println(message.getContent());
         holder.senderTextView.setText(String.valueOf(message.getSenderId()));
         holder.contentTextView.setText(message.getContent());
         if(message.getSenderId() == mainController.getCurrentUserID()){

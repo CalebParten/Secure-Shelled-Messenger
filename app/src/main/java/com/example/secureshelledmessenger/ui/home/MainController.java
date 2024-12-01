@@ -110,6 +110,10 @@ public class MainController {
         apiDataModel.sendMessage(senderID,receiverID,content,password,key);
     }
 
+    public Message decryptMessage(Message message, String key){
+        return apiDataModel.decryptMessage(message,key);
+    }
+
     //User model interaction
     public void updateUsername(String username){
         userData.setUsername(username);
