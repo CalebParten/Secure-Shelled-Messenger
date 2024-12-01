@@ -6,9 +6,11 @@ import com.example.secureshelledmessenger.model.ApiData;
 import com.example.secureshelledmessenger.model.Contact;
 import com.example.secureshelledmessenger.model.ContactData;
 import com.example.secureshelledmessenger.model.Message;
+import com.example.secureshelledmessenger.model.RecentMessage;
 import com.example.secureshelledmessenger.model.UserData;
 
 import java.lang.reflect.Array;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class MainController {
@@ -61,6 +63,19 @@ public class MainController {
     public void getUserString(String username){
         System.out.println("Request Result: " + apiDataModel.requestLookupUser(username));
     }
+
+    public ArrayList<RecentMessage> getRecentMessages(){
+        return contactDataModel.getRecentMessages();
+    }
+
+    public void replaceRecentMessage(String sender, String content, LocalDateTime time){
+        contactDataModel.replaceRecentMessage(sender,content,time);
+    }
+
+    public RecentMessage getContactRecentMessage(String username){
+        return contactDataModel.getContactRecentMessage(username);
+    }
+
 
     //Api Model interaction
     public void createUser(String username, String password){

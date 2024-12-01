@@ -1,11 +1,17 @@
 package com.example.secureshelledmessenger;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.widget.Toast;
 
+import com.example.secureshelledmessenger.model.CheckMessageWorker;
 import com.example.secureshelledmessenger.model.Contact;
 //import com.example.secureshelledmessenger.model.User;
+import com.example.secureshelledmessenger.model.NotificationWorker;
 import com.example.secureshelledmessenger.ui.home.MainController;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -14,12 +20,17 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import com.example.secureshelledmessenger.databinding.ActivityMainBinding;
 import com.example.secureshelledmessenger.ui.home.AppTheme;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,9 +40,16 @@ public class MainActivity extends AppCompatActivity {
 //    private User user;
     private MainController mainController;
 
+    private Handler recentMessageHandler = new Handler();
+    private Runnable recentMessageRunnable;
+    private Handler notifyHandler = new Handler();
+    private Runnable notifyRunnable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        buildNotifChannel();
 
         mainController = MainController.getInstance(this);
         mainController.getUserContacts();
@@ -60,11 +78,31 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
+        recentMessageRunnable = new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("updating recent messages");
+                initiateCheckMessageWorker();
+                recentMessageHandler.postDelayed(this, 10000);
+            }
+        };
+        recentMessageHandler.post(recentMessageRunnable);
+
+        notifyRunnable = new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("checking to notify");
+                initiateNotifyWorker();
+                notifyHandler.postDelayed(this,20000);
+            }
+        };
+        notifyHandler.post(notifyRunnable);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
 //                mainController.createUser("David","D123");
-                mainController.getUserString("David");
+                mainController.getUserString(mainController.getCurrentUsername());
                 System.out.println(mainController.getCurrentPassword());
                 System.out.println(mainController.getCurrentUserID());
                 System.out.println(mainController.getCurrentUsername());
@@ -103,5 +141,34 @@ public class MainActivity extends AppCompatActivity {
 
         //returns True, navController returns to previous fragment
         return navController.navigateUp();
+    }
+
+    public void initiateCheckMessageWorker(){
+
+//        PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(CheckMessageWorker.class,
+//                10, TimeUnit.SECONDS).build();
+
+        OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(CheckMessageWorker.class).build();
+
+        WorkManager.getInstance(this).enqueue(oneTimeWorkRequest);
+//        WorkManager.getInstance(this).enqueueUniquePeriodicWork("refreshRecentMessages",
+//                ExistingPeriodicWorkPolicy.KEEP,periodicWorkRequest);
+    }
+
+    public void initiateNotifyWorker(){
+        OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(NotificationWorker.class).build();
+        WorkManager.getInstance(this).enqueue(oneTimeWorkRequest);
+    }
+
+    public void buildNotifChannel(){
+        CharSequence channelName = "SSM";
+        String description = "Notifications for Secure Shelled Messenger";
+        int importanceLevel = NotificationManager.IMPORTANCE_DEFAULT;
+        NotificationChannel notificationChannel = new NotificationChannel("default",
+                channelName,importanceLevel);
+        notificationChannel.setDescription(description);
+
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        notificationManager.createNotificationChannel(notificationChannel);
     }
 }

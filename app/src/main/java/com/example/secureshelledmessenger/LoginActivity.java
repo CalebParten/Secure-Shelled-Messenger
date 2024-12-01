@@ -1,9 +1,12 @@
 package com.example.secureshelledmessenger;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +14,8 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -32,11 +37,21 @@ public class LoginActivity extends AppCompatActivity {
     EditText passwordField;
     Button submitButton;
 
+    private Handler handler;
+    private Runnable runnable;
+
     private AppTheme currentTheme;
+
+    private String[] permissions = {Manifest.permission.POST_NOTIFICATIONS, Manifest.permission.INTERNET};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(!hasNotifPermission() && !hasInternetPermission()){
+            requestPermissions();
+        }
 
         mainController = MainController.getInstance(this);
 
@@ -124,5 +139,19 @@ public class LoginActivity extends AppCompatActivity {
 
     private void applyTheme(AppTheme theme) {
         setTheme(theme.getStyleResId()); // Directly apply the theme
+    }
+
+    private boolean hasNotifPermission(){
+        return (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED);
+    }
+
+    private boolean hasInternetPermission(){
+        return (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED);
+    }
+
+    private void requestPermissions(){
+        ActivityCompat.requestPermissions(this,permissions,1);
     }
 }

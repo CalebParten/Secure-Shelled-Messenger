@@ -14,8 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.secureshelledmessenger.R;
 import com.example.secureshelledmessenger.model.Contact;
+import com.example.secureshelledmessenger.model.Message;
+import com.example.secureshelledmessenger.model.RecentMessage;
 import com.example.secureshelledmessenger.ui.home.MainController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
@@ -43,6 +46,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Contact contact = contacts.get(position);
         holder.bind(contact);
+
+        for(int i = 0; i < mainController.getRecentMessages().size(); i++){
+            System.out.println(mainController.getRecentMessages().get(i).getContent());
+        }
+        System.out.println(mainController.getRecentMessages().size());
 
         holder.itemView.setOnClickListener(v -> {
             Bundle bundle = new Bundle();

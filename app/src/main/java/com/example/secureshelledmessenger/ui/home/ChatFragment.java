@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,7 @@ public class ChatFragment extends Fragment {
     private MainController mainController;
 
     private Contact contact;
-    private List<Message> messageList;
+    private List<Message> messageList = new ArrayList<>();
     private Long contactID;
 
     private MessageAdapter messageAdapter;
@@ -40,6 +41,10 @@ public class ChatFragment extends Fragment {
     private TextView privateKey;
     private EditText messageInput;
     private Button sendButton;
+
+    private Handler handler = new Handler();
+    private Runnable runnable;
+
 
     public ChatFragment() {
     }
@@ -74,46 +79,55 @@ public class ChatFragment extends Fragment {
         messageInput = view.findViewById(R.id.message_input);
         System.out.println(contact.getAssignedKey());
 
-//        messageList = new ArrayList<>();
-//        loadDummyMessages();
+
 
         contactName.setText(contact.getName());
-//        privateKey.setText(contact.getAssignedKey());
 
-        new Thread(new Runnable() {
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_messages);
+        messageAdapter = new MessageAdapter(messageList, contact.getName());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(messageAdapter);
+
+        runnable = new Runnable() {
+
             @Override
             public void run() {
-                Long receiverID = mainController.getContactID(contact.getUsername());
-                ArrayList<Message> newMessages = mainController.getConversation(mainController.getCurrentUserID(), receiverID);
 
-                getActivity().runOnUiThread(new Runnable() {
+                new Thread(new Runnable() {
+
                     @Override
                     public void run() {
-                        messageList = newMessages;
+                        Long receiverID = mainController.getContactID(contact.getUsername());
+                        ArrayList<Message> newMessages = mainController.getConversation(
+                                mainController.getCurrentUserID(),
+                                receiverID);
 
-                        for(Message message: messageList){
-                            System.out.println(message.getTimestamp());
+                        if((newMessages.size() > messageList.size()) || (newMessages.isEmpty())){
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    messageList.clear();
+                                    messageList.addAll(newMessages);
+                                    messageAdapter.notifyDataSetChanged();
+                                    contactID = receiverID;
+                                }
+                            });
                         }
-
-                        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_messages);
-                        messageAdapter = new MessageAdapter(messageList, contact.getName());
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                        recyclerView.setAdapter(messageAdapter);
-
-                        contactID = receiverID;
                     }
-                });
+                }).start();
+                handler.postDelayed(this,5000);
             }
-        }).start();
+        };
+        handler.post(runnable);
 
         messageInput = view.findViewById(R.id.message_input);
         sendButton = view.findViewById(R.id.send_button);
 
-
         sendButton.setOnClickListener(v -> {
-            String messageContent = messageInput.getText().toString();
-            if (!messageContent.isEmpty()) {
 
+            String messageContent = messageInput.getText().toString();
+
+            if (!messageContent.isEmpty()) {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -127,12 +141,14 @@ public class ChatFragment extends Fragment {
                                 mainController.getCurrentUserID(), contactID);
 
                         getActivity().runOnUiThread(new Runnable() {
+
                             @Override
                             public void run() {
                                 messageList.clear();
                                 messageList.addAll(updatedMessages);
                                 messageAdapter.notifyDataSetChanged();
                                 System.out.println("message sent");
+
                             }
                         });
                     }
@@ -141,6 +157,13 @@ public class ChatFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        handler.removeCallbacks(runnable);
+        System.out.println("Handler exited");
     }
 
     public void loadDummyMessages(){

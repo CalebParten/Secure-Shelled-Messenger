@@ -1,6 +1,7 @@
 package com.example.secureshelledmessenger.model;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Pair;
 
 import com.example.secureshelledmessenger.libraries.TinyDB;
@@ -8,7 +9,9 @@ import com.example.secureshelledmessenger.ui.home.MainController;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ContactData {
 
@@ -18,12 +21,14 @@ public class ContactData {
     private Context context;
 
     private ArrayList<Contact> contacts;
-    private ArrayList<Pair<String,String>> recentContactMessages;
+    private ArrayList<RecentMessage> recentMessages;
+
     private TinyDB tinyDB;
 
 
     private ContactData(Context context){
         this.contacts = new ArrayList<>();
+        this.recentMessages = new ArrayList<>();
         this.tinyDB = new TinyDB(context);
         apiData = ApiData.getInstance(context);
         userData = UserData.getInstance(context);
@@ -67,6 +72,28 @@ public class ContactData {
         return contacts;
     }
 
+    public void replaceRecentMessage(String sender, String content, LocalDateTime time){
+        RecentMessage newRecentMessage = new RecentMessage(sender,content,time);
+        for(int i = 0; i < recentMessages.size(); i++){
+            if(recentMessages.get(i).getSender().equals(sender)){
+                recentMessages.set(i,newRecentMessage);
+                saveRecentMessages();
+                return;
+            }
+        }
+        recentMessages.add(newRecentMessage);
+        saveRecentMessages();
+    }
+
+    public RecentMessage getContactRecentMessage(String username){
+        for(RecentMessage recentMessage: recentMessages){
+            if(recentMessage.getSender().equals(username)){
+                return recentMessage;
+            }
+        }
+        return null;
+    }
+
     public void saveContacts(){
         Gson gson = new Gson();
         String contactsString = gson.toJson(contacts);
@@ -104,9 +131,25 @@ public class ContactData {
         getContacts();
     }
 
+    public void saveRecentMessages(){
+        Gson gson = new Gson();
+        String contactsString = gson.toJson(recentMessages);
+        tinyDB.putString(MainController.getInstance().getCurrentUsername() + "RecentMessages", contactsString);
+    }
 
-    public void setRecentContactMessages(ArrayList<Pair<String,String>> recentContactMessages){
-        this.recentContactMessages = recentContactMessages;
+    public ArrayList<RecentMessage> getRecentMessages(){
+        String recentMessagesString = tinyDB.getString(MainController.getInstance().getCurrentUsername() + "RecentMessages");
+        if(recentMessagesString.isEmpty()){
+            return new ArrayList<>();
+        }
+
+        Gson gson = new Gson();
+        recentMessages = gson.fromJson(recentMessagesString, new TypeToken<ArrayList<RecentMessage>>(){}.getType());
+        return recentMessages;
+    }
+
+    public void setRecentMessages(ArrayList<RecentMessage> recentMessages){
+        this.recentMessages = recentMessages;
     }
 
     public void loadDummyContacts(){

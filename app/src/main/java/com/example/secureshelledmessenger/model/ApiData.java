@@ -138,8 +138,9 @@ public class ApiData {
         return ApiClient.deleteMessage(userId, messageId, password);
     }
 
-    public Long getContactID(String username) {
+    public long getContactID(String username) {
         try {
+            System.out.println("'" + ApiClient.lookupUser(username) + "'");
             return Long.parseLong(ApiClient.lookupUser(username));
         } catch (Exception e) {
             System.out.println("user doesnt exist so returning -1");

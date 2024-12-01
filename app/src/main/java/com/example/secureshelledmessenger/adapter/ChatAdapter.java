@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.secureshelledmessenger.R;
 import com.example.secureshelledmessenger.model.Contact;
+import com.example.secureshelledmessenger.model.Message;
 import com.example.secureshelledmessenger.ui.home.MainController;
 
 import java.util.ArrayList;
@@ -43,6 +44,24 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ChatAdapter.ViewHolder holder, int position) {
         Contact contact = contacts.get(position);
         holder.bind(contact);
+
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                long receiverID = mainController.getContactID(contact.getUsername());
+//                long userID = mainController.getCurrentUserID();
+//                ArrayList<Message> conversation = mainController.getConversation(userID,receiverID);
+//                for(int i = conversation.size() - 1; i >= 0; i--){
+//                    System.out.println("checked");
+//                    if(conversation.get(i).getSenderId() == receiverID){
+//                        mainController.replaceRecentMessage(contact.getUsername(),
+//                                conversation.get(i).getContent(),
+//                                conversation.get(i).getTimestamp());
+//                        break;
+//                    }
+//                }
+//            }
+//        }).start();
 
         holder.itemView.setOnClickListener(view -> {
             Bundle bundle = new Bundle();

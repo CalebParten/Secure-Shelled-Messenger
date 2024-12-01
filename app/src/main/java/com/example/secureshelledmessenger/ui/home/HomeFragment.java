@@ -19,6 +19,8 @@ import com.example.secureshelledmessenger.adapter.ChatAdapter;
 import com.example.secureshelledmessenger.adapter.ContactAdapter;
 import com.example.secureshelledmessenger.databinding.FragmentHomeBinding;
 import com.example.secureshelledmessenger.model.Contact;
+import com.example.secureshelledmessenger.model.Message;
+import com.example.secureshelledmessenger.model.RecentMessage;
 
 import java.util.ArrayList;
 
