@@ -19,7 +19,6 @@ public class SettingsFragment extends Fragment {
     private Spinner themes;
     private static final String LIGHT_THEME = "LIGHT";
     private static final String DARK_THEME = "DARK";
-    private static final String LIGHT_DARK_THEME = "LIGHT_DARK";
     private static final String HIGH_CONTRAST_THEME = "HIGH_CONTRAST";
 
     public SettingsFragment() {

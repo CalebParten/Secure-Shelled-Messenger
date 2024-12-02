@@ -6,7 +6,6 @@
     <string-array name="theme_options">
         <item>LIGHT</item>
         <item>DARK</item>
-        <item>LIGHT_DARK</item>
         <item>HIGH_CONTRAST</item>
 
     </string-array>

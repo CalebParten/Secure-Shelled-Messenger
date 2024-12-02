@@ -1,15 +1,4 @@
 <resources>
-    <!-- Purples -->
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#6200EE</color>
-    <color name="purple_700">#3700B3</color>
-    <color name="purple_800">#2900B3</color>
-    <color name="purple_900">#1D0068</color>
-
-    <!-- Teals -->
-    <color name="teal_200">#03DAC5</color>
-    <color name="teal_600">#018786</color>
-    <color name="teal_700">#00796B</color>
 
     <!-- Discord-like Colors -->
     <color name="discord_black">#23272A</color>
@@ -17,7 +6,25 @@
     <color name="discord_dark_gray">#202225</color>
     <color name="discord_blue">#7289DA</color>
 
-    <!-- Grays -->
+    <!-- Earthy Greens -->
+    <color name="turtle_green_200">#A8D08D</color>
+    <color name="turtle_green_500">#6B8E23</color>
+    <color name="turtle_green_700">#4B6F44</color>
+    <color name="turtle_green_800">#3C5A34</color>
+    <color name="turtle_green_900">#2E4A27</color>
+
+    <!-- Shell Browns -->
+    <color name="shell_brown_200">#D2B48C</color>
+    <color name="shell_brown_500">#8B4513</color>
+    <color name="shell_brown_700">#5C4033</color>
+
+    <!-- Turtle Accent Colors -->
+    <color name="turtle_accent">#98C379</color>
+
+    <!-- Brighter Green -->
+    <color name="turtle_green_600">#4F8A45</color>
+
+    <!-- Grays for Depth -->
     <color name="gray_200">#BDBDBD</color>
     <color name="dark_gray">#1C1C1C</color>
 
@@ -28,21 +35,18 @@
     <!-- Text Colors -->
     <color name="colorTextLight">#000000</color>
     <color name="colorTextDark">#FFFFFF</color>
+    <color name="colorTextHigh">#26FF00</color>
     <color name="colorTextLightDark">#333333</color>
     <color name="hintTextColorLight">#808080</color>
     <color name="hintTextColorDark">#FFFFFF</color>
 
-    <!-- High Contrast Colors -->
-    <color name="yellow">#FFFF00</color>
-    <color name="pink">#FF69B4</color>
-
     <!-- Standard Colors -->
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#6B8E23</color>
+    <color name="colorPrimaryDark">#4B6F44</color>
+    <color name="colorAccent">#98C379</color>
 
     <color name="colorBackground">#FFFFFF</color>
 
     <!-- Add this missing color -->
-    <color name="colorOnPrimary">#FFFFFF</color> <!-- White text on primary color -->
-</resources>
+    <color name="colorOnPrimary">#FFFFFF</color>
+    </resources>

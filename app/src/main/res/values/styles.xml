@@ -4,25 +4,24 @@
 
     <!-- Light Theme -->
     <style name="Theme.SecureShelledMessenger.Light" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/turtle_green_500</item> <!-- Olive green -->
+        <item name="colorPrimaryVariant">@color/turtle_green_700</item> <!-- Dark green variant -->
         <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorSecondary">@color/turtle_accent</item> <!-- Fresh accent green -->
+        <item name="colorSecondaryVariant">@color/turtle_green_700</item>
         <item name="colorOnSecondary">@color/black</item>
-        <item name="android:statusBarColor">@color/purple_500</item>
+        <item name="android:statusBarColor">@color/turtle_green_500</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:textColor">@color/colorTextLight</item>
         <item name="colorBackground">@color/white</item>
         <item name="colorOnBackground">@color/black</item>
-        <!--<item name="android:hintTextColor">@color/hintTextColorLight</item>-->
-        <item name="android:spinnerStyle">@style/CustomSpinner.Light</item> <!-- Use Light Spinner Style -->
+        <item name="android:spinnerStyle">@style/CustomSpinner.Light</item>
     </style>
 
     <!-- Dark Theme -->
     <style name="Theme.SecureShelledMessenger.Dark" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/discord_gray</item>
-        <item name="colorPrimaryVariant">@color/discord_dark_gray</item>
+        <item name="colorPrimary">@color/turtle_green_700</item>
+        <item name="colorPrimaryVariant">@color/turtle_green_800</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/discord_blue</item>
         <item name="colorOnSecondary">@color/white</item>
@@ -31,46 +30,32 @@
         <item name="android:textColor">@color/colorTextDark</item>
         <item name="colorBackground">@color/discord_black</item>
         <item name="colorOnBackground">@color/white</item>
-        <!--<item name="android:hintTextColor">@color/hintTextColorDark</item>-->
-        <item name="android:spinnerStyle">@style/CustomSpinner.Dark</item> <!-- Use Dark Spinner Style -->
+        <item name="android:spinnerStyle">@style/CustomSpinner.Dark</item>
     </style>
 
-    <!-- Light-Dark Hybrid Theme -->
-    <style name="Theme.SecureShelledMessenger.LightDark" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/purple_700</item>
-        <item name="colorPrimaryVariant">@color/purple_900</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/teal_700</item>
-        <item name="colorSecondaryVariant">@color/teal_600</item>
-        <item name="colorOnSecondary">@color/white</item>
-        <item name="android:statusBarColor">@color/purple_900</item>
-        <item name="android:windowBackground">@color/gray_200</item>
-        <item name="android:textColor">@color/colorTextLightDark</item>
-        <item name="colorBackground">@color/gray_200</item>
-        <item name="colorOnBackground">@color/black</item>
-        <item name="android:spinnerStyle">@style/CustomSpinner.Light</item> <!-- Use Light Spinner Style -->
-    </style>
+
 
     <!-- High Contrast Theme -->
     <style name="Theme.SecureShelledMessenger.HighContrast" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryVariant">@color/dark_gray</item>
+        <item name="colorPrimary">@color/turtle_green_600</item>
+        <item name="colorPrimaryVariant">@color/turtle_green_700</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/yellow</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <item name="android:statusBarColor">@color/black</item>
-        <item name="android:windowBackground">@color/black</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="colorBackground">@color/black</item>
+        <item name="colorSecondary">@color/discord_blue</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:statusBarColor">@color/discord_blue</item>
+        <item name="android:windowBackground">@color/discord_black</item>
+        <item name="android:textColor">@color/colorTextHigh</item>
+        <item name="colorBackground">@color/discord_black</item>
         <item name="colorOnBackground">@color/white</item>
-        <!--<item name="android:hintTextColor">@color/hintTextColorLight</item>-->
-        <item name="android:spinnerStyle">@style/CustomSpinner.Dark</item> <!-- Use Dark Spinner Style -->
+        <item name="android:spinnerStyle">@style/CustomSpinner.Dark</item>
     </style>
+
+
 
     <!-- Custom Spinner Styles -->
     <style name="CustomSpinner.Light" parent="Widget.AppCompat.Spinner">
-        <item name="android:background">@color/colorPrimary</item> <!-- Set a contrasting background -->
-        <item name="android:textColor">@color/colorOnPrimary</item> <!-- Ensure text color is legible -->
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorOnPrimary</item>
     </style>
 
     <style name="CustomSpinner.Dark" parent="Widget.AppCompat.Spinner">
@@ -81,7 +66,7 @@
 
 
     <style name="CustomSpinner.DarkPinkBorder" parent="Widget.AppCompat.Spinner">
-        <item name="android:background">@color/discord_gray</item> <!-- Darker background for dark theme -->
-        <item name="android:textColor">@color/white</item> <!-- White text for visibility -->
+        <item name="android:background">@color/discord_gray</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 </resources>

@@ -39,7 +39,9 @@
         app:passwordToggleEnabled="true"
         app:boxBackgroundMode="filled"
         app:boxBackgroundColor="?attr/colorBackground"
+        android:textColorHint="?android:textColor"
         android:hint="Private Key">
+
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/private_key"
@@ -70,6 +72,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Type a message..."
+        android:textColorHint="?android:textColor"
 		android:textColor="?android:textColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -21,22 +21,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-//import com.example.secureshelledmessenger.model.User;
 import com.example.secureshelledmessenger.ui.home.AppTheme;
 import com.example.secureshelledmessenger.ui.home.MainController;
-
-import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
 
     MainController mainController;
     private String userID;
 
-    //Dummy data container (will change)
-//    ArrayList<User> users;
     EditText usernameField;
     EditText passwordField;
     Button submitButton;
+    TextView createAccountTextView;  // Initialized createAccountTextView
 
     private Handler handler;
     private Runnable runnable;
@@ -44,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
     private AppTheme currentTheme;
 
     private String[] permissions = {Manifest.permission.POST_NOTIFICATIONS, Manifest.permission.INTERNET};
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,70 +66,55 @@ public class LoginActivity extends AppCompatActivity {
             return insets;
         });
 
-        //Initiate Dummy Data (can Add,Delete,Edit these lines)
-//        users = new ArrayList<>();
-//        users.add(new User((long)0,"default","default",new ArrayList<>()));
-//        users.add(new User((long)1,"David","D123",new ArrayList<>()));
-//        users.add(new User((long)2,"Caleb","C123",new ArrayList<>()));
-//        users.add(new User((long)3,"Mario","M123",new ArrayList<>()));
-
         usernameField = findViewById(R.id.username_field);
         passwordField = findViewById(R.id.password_field);
         submitButton = findViewById(R.id.submit_button);
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        // Initialize the createAccountTextView here
+        createAccountTextView = findViewById(R.id.createAccountTextView);
 
-                String username = usernameField.getText().toString();
-                String password = passwordField.getText().toString();
+        submitButton.setOnClickListener(view -> {
+            String username = usernameField.getText().toString();
+            String password = passwordField.getText().toString();
 
-                if(username.isEmpty()){
-                    usernameField.setError("Username is Required");
-                    usernameField.requestFocus();
-                }
-                else if(password.isEmpty()){
-                    passwordField.setError("Password is Required");
-                    passwordField.requestFocus();
-                }
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String loginCheckResult = mainController.checkLogin(username,password);
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                userID = loginCheckResult;
-                                System.out.println("Login Check Result (User ID): " + loginCheckResult);
-                                System.out.println(loginCheckResult.getClass());
-                                if(userID != null && !userID.isEmpty()){
-//                                    SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
-//                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-//                                    editor.putString("username",username);
-//                                    editor.putString("password",password);
-//                                    editor.putLong("userID",Long.parseLong(userID));
-//                                    editor.apply();
-                                    mainController.updatePassword(password);
-                                    mainController.updateUsername(username);
-                                    mainController.updateUserID(Long.parseLong(userID));
-                                    goToMainActivity();
-                                    return;
-                                }
-                                usernameField.setError("Incorrect Username or Password");
-                                usernameField.setText("");
-                                passwordField.setText("");
-                                usernameField.requestFocus();
-                            }
-                        });
-                    }
-                }).start();
+            if(username.isEmpty()){
+                usernameField.setError("Username is Required");
+                usernameField.requestFocus();
             }
+            else if(password.isEmpty()){
+                passwordField.setError("Password is Required");
+                passwordField.requestFocus();
+            }
+            new Thread(() -> {
+                String loginCheckResult = mainController.checkLogin(username, password);
+
+                runOnUiThread(() -> {
+                    userID = loginCheckResult;
+                    System.out.println("Login Check Result (User ID): " + loginCheckResult);
+                    if(userID != null && !userID.isEmpty()){
+                        mainController.updatePassword(password);
+                        mainController.updateUsername(username);
+                        mainController.updateUserID(Long.parseLong(userID));
+                        goToMainActivity();
+                    } else {
+                        usernameField.setError("Incorrect Username or Password");
+                        usernameField.setText("");
+                        passwordField.setText("");
+                        usernameField.requestFocus();
+                    }
+                });
+            }).start();
+        });
+
+        // Add OnClickListener for createAccountTextView
+        createAccountTextView.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);  // Navigate to CreateAccountActivity
+            startActivity(intent);
         });
     }
 
     public void goToMainActivity(){
-        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
     }
 
@@ -143,24 +123,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean hasNotifPermission(){
-        return (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED);
+        return (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED);
     }
 
     private boolean hasInternetPermission(){
-        return (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED);
+        return (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED);
     }
-
-//    private void requestPermissions(){
-//        ActivityCompat.requestPermissions(this,permissions,1);
-//    }
 
     private void requestNotificationPermssion(){
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.POST_NOTIFICATIONS},1);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1);
     }
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -170,7 +142,6 @@ public class LoginActivity extends AppCompatActivity {
                 if(grantResults[i] != PackageManager.PERMISSION_GRANTED){
                     requestNotificationPermssion();
                 }
-
             }
         }
     }
