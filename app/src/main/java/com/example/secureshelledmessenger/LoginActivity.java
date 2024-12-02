@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText usernameField;
     EditText passwordField;
     Button submitButton;
-    TextView createAccountTextView;  // Initialized createAccountTextView
+    TextView createAccountTextView;
 
     private Handler handler;
     private Runnable runnable;

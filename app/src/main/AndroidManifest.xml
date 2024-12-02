@@ -21,8 +21,7 @@
 
         <activity
             android:name=".CreateAccountActivity"
-            android:exported="true"
-            android:label="@string/app_name" />
+            android:exported="false" />
 
         <activity
             android:name=".LoginActivity"
