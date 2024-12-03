@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -84,7 +83,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/confirmPasswordEditText" />
+        app:layout_constraintTop_toBottomOf="@id/confirmPasswordEditText"
+        android:layout_marginTop="24dp" />
 
     <!-- Login Redirection TextView -->
     <TextView
@@ -93,9 +93,10 @@
         android:layout_height="wrap_content"
         android:text="Already have an account? Login"
         android:textColor="?android:textColor"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/createAccountButton"
         android:layout_marginTop="20dp" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
