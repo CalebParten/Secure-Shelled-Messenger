@@ -1,9 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout 
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- Account Information Section -->
+    <TextView
+        android:id="@+id/txt_account_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Account Information"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_account_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Username: "
+        app:layout_constraintTop_toBottomOf="@id/txt_account_info"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/txt_account_key"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Key: "
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/txt_account_username"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Theme Selection -->
     <TextView
@@ -11,21 +42,75 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Select App Theme"
-        android:contentDescription="Label for theme selection" 
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_account_key"
         app:layout_constraintStart_toStartOf="parent"
-        android:padding="16dp"/>
+        android:layout_marginTop="16dp" />
 
     <Spinner
-    android:id="@+id/spinner_theme_selection"
-    android:layout_width="match_parent" 
-    android:layout_height="wrap_content"
-    android:contentDescription="Dropdown for selecting app theme" 
-    app:layout_constraintTop_toBottomOf="@id/txt_theme_selection"
-    app:layout_constraintStart_toStartOf="parent"
-    android:layout_marginTop="8dp"
-    android:background="?attr/colorBackground" 
-    android:textColor="?attr/colorOnBackground"
-    style="?android:attr/spinnerStyle" />
+        android:id="@+id/spinner_theme_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/txt_theme_selection"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- Notifications Toggle -->
+    <TextView
+        android:id="@+id/txt_notifications"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enable Notifications"
+        app:layout_constraintTop_toBottomOf="@id/spinner_theme_selection"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <Switch
+        android:id="@+id/switch_notifications"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintTop_toTopOf="@id/txt_notifications"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Privacy Settings -->
+    <TextView
+        android:id="@+id/txt_privacy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Privacy Settings"
+        app:layout_constraintTop_toBottomOf="@id/switch_notifications"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btn_privacy_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Manage Privacy"
+        android:layout_marginTop="8dp"
+        android:minHeight="48dp"
+        app:layout_constraintTop_toBottomOf="@id/txt_privacy"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Logout -->
+    <TextView
+        android:id="@+id/txt_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Account"
+        app:layout_constraintTop_toBottomOf="@id/btn_privacy_settings"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Log Out"
+        android:minHeight="48dp"
+        app:layout_constraintTop_toBottomOf="@id/txt_account"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

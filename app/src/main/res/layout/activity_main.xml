@@ -5,22 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Settings Button -->
-    <ImageButton
-        android:id="@+id/btn_settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_settings"
-        android:contentDescription="Open settings"
-        android:background="?attr/selectableItemBackground"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:padding="16dp"/>
-
     <!-- List of People Messaged -->
 
     <!-- Bottom Navigation View -->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_contacts"
         android:layout_width="0dp"
@@ -30,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_settings"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -49,7 +36,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:layout_constraintTop_toBottomOf="@id/btn_settings"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/nav_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

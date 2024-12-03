@@ -1,25 +1,42 @@
 package com.example.secureshelledmessenger.ui.home;
 
-import com.example.secureshelledmessenger.R;
-import com.example.secureshelledmessenger.MainActivity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.content.SharedPreferences;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
-import android.util.Log;
+
+import androidx.fragment.app.Fragment;
+
+import com.example.secureshelledmessenger.LoginActivity;
+import com.example.secureshelledmessenger.MainActivity;
+import com.example.secureshelledmessenger.R;
+import com.example.secureshelledmessenger.model.UserData;
 
 public class SettingsFragment extends Fragment {
 
     private Spinner themes;
+    private Switch notificationsSwitch;
+    private Button privacySettingsButton;
+    private Button logoutButton;
+    private TextView accountNameText;
+    private TextView accountUsernameText;
+    private TextView accountKeyText;  // Added for displaying the key
+
     private static final String LIGHT_THEME = "LIGHT";
     private static final String DARK_THEME = "DARK";
     private static final String HIGH_CONTRAST_THEME = "HIGH_CONTRAST";
+
+    private MainController mainController;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -30,7 +47,55 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
+        // Initialize views
         themes = view.findViewById(R.id.spinner_theme_selection);
+        notificationsSwitch = view.findViewById(R.id.switch_notifications);
+        privacySettingsButton = view.findViewById(R.id.btn_privacy_settings);
+        logoutButton = view.findViewById(R.id.btn_logout);
+        accountUsernameText = view.findViewById(R.id.txt_account_username);
+        accountKeyText = view.findViewById(R.id.txt_account_key);  // Initialize key TextView
+
+        // Get the MainController instance
+        mainController = MainController.getInstance(getContext());
+
+        // Load and display account information using MainController
+        displayAccountInfo();
+
+        // Theme Selection
+        setupThemeSelection();
+
+        // Notifications Toggle
+        SharedPreferences prefs = getActivity().getSharedPreferences("AppPrefs", getContext().MODE_PRIVATE);
+        notificationsSwitch.setChecked(prefs.getBoolean("notifications_enabled", true));
+        notificationsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("notifications_enabled", isChecked);
+            editor.apply();
+            Toast.makeText(getContext(), "Notifications " + (isChecked ? "enabled" : "disabled"), Toast.LENGTH_SHORT).show();
+        });
+
+        // Privacy Settings
+        privacySettingsButton.setOnClickListener(v -> {
+            Toast.makeText(getContext(), "Privacy settings feature coming soon!", Toast.LENGTH_SHORT).show();
+        });
+
+        // Logout Button
+        logoutButton.setOnClickListener(v -> logout());
+
+        return view;
+    }
+
+    private void displayAccountInfo() {
+        // Retrieve current user info from MainController
+        String username = mainController.getCurrentUsername();
+        String key = mainController.getCurrentPassword();
+
+        // Set the retrieved data to TextViews
+        accountUsernameText.setText("Username: " + username);
+        accountKeyText.setText("Key: " + key); // Display the key
+    }
+
+    private void setupThemeSelection() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 getContext(),
                 R.array.theme_options,
@@ -52,7 +117,6 @@ public class SettingsFragment extends Fragment {
                 try {
                     selectedTheme = AppTheme.fromString(selectedThemeString); // Use fromString method
                 } catch (IllegalArgumentException e) {
-                    Log.e("SettingsFragment", "Invalid theme selected: " + selectedThemeString, e);
                     Toast.makeText(getContext(), "Invalid theme selected", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -77,7 +141,17 @@ public class SettingsFragment extends Fragment {
                 // No action needed
             }
         });
+    }
 
-        return view;
+    private void logout() {
+        SharedPreferences prefs = getActivity().getSharedPreferences("AppPrefs", getContext().MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear(); // Clear all saved preferences
+        editor.apply();
+
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
+        getActivity().finish();
+        Toast.makeText(getContext(), "Logged out successfully", Toast.LENGTH_SHORT).show();
     }
 }
