@@ -1,0 +1,49 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Dark Theme -->
+    <style name="Theme.SecureShelledMessenger.Dark" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/turtle_green_700</item>
+        <item name="colorPrimaryVariant">@color/turtle_green_800</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/discord_blue</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:statusBarColor">@color/discord_dark_gray</item>
+        <item name="android:windowBackground">@color/discord_black</item>
+        <item name="android:textColor">@color/colorTextDark</item>
+        <item name="colorBackground">@color/discord_black</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="android:spinnerStyle">@style/CustomSpinner.Dark</item>
+    </style>
+
+    <!-- High Contrast Theme -->
+    <style name="Theme.SecureShelledMessenger.HighContrast" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/turtle_green_600</item>
+        <item name="colorPrimaryVariant">@color/turtle_green_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/discord_blue</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:statusBarColor">@color/discord_blue</item>
+        <item name="android:windowBackground">@color/discord_black</item>
+        <item name="android:textColor">@color/colorTextHigh</item>
+        <item name="colorBackground">@color/discord_black</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="android:spinnerStyle">@style/CustomSpinner.Dark</item>
+    </style>
+
+    <!-- Light Theme -->
+    <style name="Theme.SecureShelledMessenger.Light" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/turtle_green_500</item> <!-- Olive green -->
+        <item name="colorPrimaryVariant">@color/turtle_green_700</item> <!-- Dark green variant -->
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/turtle_accent</item> <!-- Fresh accent green -->
+        <item name="colorSecondaryVariant">@color/turtle_green_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <item name="android:statusBarColor">@color/turtle_green_500</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:textColor">@color/colorTextLight</item>
+        <item name="colorBackground">@color/white</item>
+        <item name="colorOnBackground">@color/black</item>
+        <item name="android:spinnerStyle">@style/CustomSpinner.Light</item>
+    </style>
+
+</resources>
