@@ -99,27 +99,21 @@ public class SettingsFragment extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 getContext(),
                 R.array.theme_options,
-                android.R.layout.simple_spinner_item
+                android.R.layout.simple_spinner_item // Use your custom layout if needed
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         themes.setAdapter(adapter);
 
-        SharedPreferences prefs = getActivity().getSharedPreferences("AppPrefs", getContext().MODE_PRIVATE);
+        SharedPreferences prefs = requireActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
         String savedTheme = prefs.getString("theme", LIGHT_THEME);
         themes.setSelection(adapter.getPosition(savedTheme));
 
         themes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedThemeString = (String) parent.getItemAtPosition(position);
+                String selectedThemeString = parent.getItemAtPosition(position).toString();
 
-                AppTheme selectedTheme;
-                try {
-                    selectedTheme = AppTheme.fromString(selectedThemeString); // Use fromString method
-                } catch (IllegalArgumentException e) {
-                    Toast.makeText(getContext(), "Invalid theme selected", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                AppTheme selectedTheme = AppTheme.fromString(selectedThemeString);
 
                 String currentTheme = prefs.getString("theme", LIGHT_THEME);
                 if (!selectedThemeString.equals(currentTheme)) {

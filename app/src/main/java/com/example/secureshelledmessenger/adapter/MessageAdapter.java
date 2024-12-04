@@ -1,13 +1,11 @@
 package com.example.secureshelledmessenger.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.secureshelledmessenger.model.Message;
@@ -21,7 +19,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     private String contactName;
     private MainController mainController;
     private String key;
-
 
     public MessageAdapter(List<Message> messages, String contactName, String contactKey) {
         this.messages = messages;
@@ -40,19 +37,20 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Message message = mainController.decryptMessage(messages.get(position),key);
-        System.out.println(message.getContent());
-        holder.senderTextView.setText(String.valueOf(message.getSenderId()));
-        holder.contentTextView.setText(message.getContent());
-        if(message.getSenderId() == mainController.getCurrentUserID()){
+        Message message = mainController.decryptMessage(messages.get(position), key);
+
+        // Set the sender name
+        if (message.getSenderId() == mainController.getCurrentUserID()) {
             holder.senderTextView.setText("You");
-            holder.itemView.setTranslationX(400);
-            holder.itemView.setBackgroundResource(R.drawable.background_message_item);
-        }
-        else{
+        } else {
             holder.senderTextView.setText(contactName);
-            holder.itemView.setBackgroundResource(R.drawable.background_sender_message_item);
         }
+
+        // Set the message content
+        holder.contentTextView.setText(message.getContent());
+
+        // Align all messages to the left
+        holder.itemView.setTranslationX(0); // Reset any translation
     }
 
     @Override

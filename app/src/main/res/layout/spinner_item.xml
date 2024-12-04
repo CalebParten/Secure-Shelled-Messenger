@@ -3,7 +3,5 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp"
-    android:background="?attr/colorBackground"
-    android:textColor="?android:textColor"
-    android:textColorHint="?android:textColor"
+
     android:gravity="start" />
