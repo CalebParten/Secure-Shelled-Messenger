@@ -1,5 +1,6 @@
 package com.example.secureshelledmessenger.adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,8 +43,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         // Set the sender name
         if (message.getSenderId() == mainController.getCurrentUserID()) {
             holder.senderTextView.setText("You");
+            holder.itemView.setBackgroundColor(Color.parseColor("#80a113"));
         } else {
             holder.senderTextView.setText(contactName);
+            holder.itemView.setBackgroundColor(Color.parseColor("#1dc20e"));
         }
 
         // Set the message content
@@ -51,6 +54,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         // Align all messages to the left
         holder.itemView.setTranslationX(0); // Reset any translation
+//        holder.itemView.setBackgroundColor(R.color.colorAccent);
     }
 
     @Override

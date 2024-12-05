@@ -49,4 +49,7 @@
 
     <!-- Add this missing color -->
     <color name="colorOnPrimary">#FFFFFF</color>
+
+    <color name="recievedMessage">#ccff24</color>
+    <color name="sentMessage">#80a113</color>
     </resources>
