@@ -1,103 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Contact Info Area -->
+    <!-- Contact Name -->
     <TextView
         android:id="@+id/new_contact_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp"
         android:text="Contact Name:"
-        android:textSize="18sp"
         android:textColor="?android:textColor"
-        android:textColorHint="?android:textColor"
+        android:textSize="18sp"
+        android:padding="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/new_contact_name_field" />
 
     <EditText
         android:id="@+id/new_contact_name_field"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:textSize="18sp"
+        android:hint="Enter contact name"
+        android:padding="8dp"
+        android:textSize="16sp"
         android:textColor="?android:textColor"
         android:textColorHint="?android:textColor"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/new_contact_name"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Contact Username -->
+    <TextView
+        android:id="@+id/new_contact_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contact's Username:"
+        android:textColor="?android:textColor"
+        android:textSize="18sp"
+        android:padding="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_contact_name_field"
+        app:layout_constraintEnd_toStartOf="@+id/new_contact_user_field" />
 
     <EditText
         android:id="@+id/new_contact_user_field"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:inputType="text"
-        android:padding="16dp"
-        android:textSize="18sp"
+        android:hint="Enter contact's username"
+        android:padding="8dp"
+        android:textSize="16sp"
         android:textColor="?android:textColor"
         android:textColorHint="?android:textColor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/new_contact_user"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/new_contact_name_field" />
 
-    <TextView
-        android:id="@+id/new_contact_user"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:padding="16dp"
-        android:text="Contact's Username:"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_contact_name" />
-
+    <!-- Private Key -->
     <EditText
         android:id="@+id/private_key"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:hint="Private Key"
-        android:inputType="text"
-        android:padding="16dp"
+        android:hint="Enter Private Key"
+        android:padding="8dp"
+        android:textSize="16sp"
         android:textColor="?android:textColor"
         android:textColorHint="?android:textColor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_contact_user" />
-
-    <Button
-        android:id="@+id/submit_button"
-        android:layout_width="180dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="10dp"
-        android:backgroundTint="#4CAF50"
-        android:hapticFeedbackEnabled="true"
-        android:text="Edit"
-        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/delete_button"
-        app:layout_constraintTop_toBottomOf="@+id/private_key" />
+        app:layout_constraintTop_toBottomOf="@+id/new_contact_user_field" />
 
-    <Button
+    <!-- Action Buttons -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/delete_button"
-        android:layout_width="180dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="#FA0202"
-        android:hapticFeedbackEnabled="true"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:paddingVertical="12dp"
+        android:minHeight="48dp"
         android:text="Delete"
-        android:textSize="34sp"
+        android:textSize="16sp"
+        android:backgroundTint="#FA0202"
+        app:cornerRadius="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/private_key" />
+        app:layout_constraintEnd_toStartOf="@+id/submit_button"
+        app:layout_constraintTop_toBottomOf="@+id/private_key"
+        android:contentDescription="Delete contact" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/submit_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:paddingVertical="12dp"
+        android:minHeight="48dp"
+        android:text="Edit"
+        android:textSize="16sp"
+        android:backgroundTint="#4CAF50"
+        app:cornerRadius="8dp"
+        app:layout_constraintStart_toEndOf="@+id/delete_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/private_key"
+        android:contentDescription="Edit contact" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

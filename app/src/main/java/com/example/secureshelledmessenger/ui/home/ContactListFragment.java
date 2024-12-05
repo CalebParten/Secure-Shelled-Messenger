@@ -8,86 +8,80 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.secureshelledmessenger.MainActivity;
 import com.example.secureshelledmessenger.R;
 import com.example.secureshelledmessenger.adapter.ContactAdapter;
+import com.example.secureshelledmessenger.databinding.FragmentContactListBinding;
 import com.example.secureshelledmessenger.model.Contact;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ContactListFragment extends Fragment {
 
-    private MainController mainController = MainController.getInstance(this.getContext());
-
+    private FragmentContactListBinding binding;
     private ContactAdapter adapter;
     private ArrayList<Contact> contactList;
-    MainActivity mainActivity;
-    Button createContactButton;
+    private MainController mainController;
 
     public ContactListFragment() {
+        // Default constructor
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Initialize MainController with a valid context
+        mainController = MainController.getInstance(requireContext());
         contactList = mainController.getContactsList();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_contact_list, container, false);
-
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_contacts);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        adapter = new ContactAdapter(contactList, requireActivity());
-        recyclerView.setAdapter(adapter);
-
-        return view;
+        // Initialize view binding
+        binding = FragmentContactListBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        createContactButton = view.findViewById(R.id.create_contact_button);
+        // Set up RecyclerView
+        binding.recyclerViewContacts.setLayoutManager(new LinearLayoutManager(requireActivity()));
+        adapter = new ContactAdapter(contactList, requireActivity());
+        binding.recyclerViewContacts.setAdapter(adapter);
 
-        createContactButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToCreateContact(view);
-            }
-        });
-//        for(Contact contact: contactList){
-//            System.out.println(contact.getName());
-//        }
-//        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_contacts);
-//        adapter = new ContactAdapter(contactList, requireActivity()); // Pass the activity reference
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        // Handle "Create Contact" button click
+        binding.createContactButton.setOnClickListener(v -> goToCreateContact(v));
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mainActivity = (MainActivity) getActivity();
-        contactList = mainController.getContactsList();
+        // Refresh contact list and notify adapter
+        contactList.clear();
+        contactList.addAll(mainController.getContactsList());
         adapter.notifyDataSetChanged();
     }
 
-    public void goToCreateContact(View view){
+    private void goToCreateContact(View view) {
+        // Navigate to the "Create Contact" screen
         Bundle bundle = new Bundle();
-        bundle.putString("action","create");
+        bundle.putString("action", "create");
         NavController navController = Navigation.findNavController(view);
-        navController.navigate(R.id.action_contacts_to_edit_contact,bundle);
+        navController.navigate(R.id.action_contacts_to_edit_contact, bundle);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        // Clean up binding reference
+        binding = null;
     }
 }
