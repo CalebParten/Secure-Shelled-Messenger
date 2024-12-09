@@ -1,6 +1,5 @@
 package com.example.secureshelledmessenger.adapter;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,17 +8,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.secureshelledmessenger.model.Message;
 import com.example.secureshelledmessenger.R;
+import com.example.secureshelledmessenger.model.Message;
 import com.example.secureshelledmessenger.ui.home.MainController;
 
 import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
-    private List<Message> messages;
-    private String contactName;
+    private final List<Message> messages;
+    private final String contactName;
+    private final String key;
     private MainController mainController;
-    private String key;
 
     public MessageAdapter(List<Message> messages, String contactName, String contactKey) {
         this.messages = messages;
@@ -43,18 +42,19 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         // Set the sender name
         if (message.getSenderId() == mainController.getCurrentUserID()) {
             holder.senderTextView.setText("You");
-            holder.itemView.setBackgroundColor(Color.parseColor("#80a113"));
+            // Set the sent message background (using drawable resource)
+            holder.itemView.setBackgroundResource(R.drawable.sent_message_background);
         } else {
             holder.senderTextView.setText(contactName);
-            holder.itemView.setBackgroundColor(Color.parseColor("#1dc20e"));
+            // Set the received message background (using drawable resource)
+            holder.itemView.setBackgroundResource(R.drawable.received_message_background);
         }
 
         // Set the message content
         holder.contentTextView.setText(message.getContent());
 
         // Align all messages to the left
-        holder.itemView.setTranslationX(0); // Reset any translation
-//        holder.itemView.setBackgroundColor(R.color.colorAccent);
+        holder.itemView.setTranslationX(0);
     }
 
     @Override

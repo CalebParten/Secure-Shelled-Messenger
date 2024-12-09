@@ -14,6 +14,8 @@
         <item name="colorBackground">@color/white</item>
         <item name="colorOnBackground">@color/black</item>
         <item name="android:spinnerStyle">@style/CustomSpinner.Light</item>
+        <item name="sentMessageColor">@color/sentMessageLight</item>
+        <item name="receivedMessageColor">@color/receivedMessageLight</item>
     </style>
 
     <!-- Light Theme -->
@@ -30,6 +32,8 @@
         <item name="colorBackground">@color/white</item>
         <item name="colorOnBackground">@color/black</item>
         <item name="android:spinnerStyle">@style/CustomSpinner.Light</item>
+        <item name="sentMessageColor">@color/sentMessageLight</item>
+        <item name="receivedMessageColor">@color/receivedMessageLight</item>
     </style>
 
     <!-- Dark Theme -->
@@ -45,6 +49,8 @@
         <item name="colorBackground">@color/discord_black</item>
         <item name="colorOnBackground">@color/white</item>
         <item name="android:spinnerStyle">@style/CustomSpinner.Dark</item>
+        <item name="sentMessageColor">@color/sentMessageDark</item>
+        <item name="receivedMessageColor">@color/receivedMessageDark</item>
     </style>
 
     <!-- High Contrast Theme -->
@@ -60,7 +66,10 @@
         <item name="colorBackground">@color/discord_black</item>
         <item name="colorOnBackground">@color/white</item>
         <item name="android:spinnerStyle">@style/CustomSpinner.Dark</item>
+        <item name="sentMessageColor">@color/sentMessageHighContrast</item>
+        <item name="receivedMessageColor">@color/receivedMessageHighContrast</item>
     </style>
+
 
     <!-- Custom Spinner Styles -->
     <style name="CustomSpinner.Light" parent="Widget.AppCompat.Spinner">

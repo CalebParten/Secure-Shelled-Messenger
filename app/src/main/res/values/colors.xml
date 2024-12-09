@@ -47,9 +47,19 @@
 
     <color name="colorBackground">#FFFFFF</color>
 
-    <!-- Add this missing color -->
     <color name="colorOnPrimary">#FFFFFF</color>
+    `
 
-    <color name="recievedMessage">#ccff24</color>
+    <color name="sentMessageLight">#80a113</color>
+    <color name="receivedMessageLight">#1dc20e</color>
+
+    <color name="sentMessageDark">#80a113</color>
+    <color name="receivedMessageDark">#1dc20e</color>
+
+    <color name="sentMessageHighContrast">#004900</color>
+    <color name="receivedMessageHighContrast">#0C380C</color>
+
+
+    <color name="receivedMessage">#ccff24</color>
     <color name="sentMessage">#80a113</color>
     </resources>
