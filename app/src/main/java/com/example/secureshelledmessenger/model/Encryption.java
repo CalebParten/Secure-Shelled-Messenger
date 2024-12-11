@@ -1,3 +1,10 @@
+/**
+ * @author Caleb Parten
+ * @date 12/10/2024
+ *
+ * This file is used to encrypt the messages sent from the application before the enter the API and
+ * decrypt the messages when they are retrieved from the API.
+ */
 package com.example.secureshelledmessenger.model;
 
 import java.util.ArrayList;

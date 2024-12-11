@@ -1,3 +1,9 @@
+/**
+ * @author Mario Soto
+ * @date 12/10/2024
+ *
+ * This file is the activity that is shown to the user when they select "create account"
+ */
 package com.example.secureshelledmessenger;
 
 import android.Manifest;

@@ -1,3 +1,11 @@
+/**
+ * @author Caleb Parten
+ * @author David Schmith
+ * @author Mario Soto
+ * @date 12/10/2024
+ *
+ * This file defines the Message object with its attributes.
+ */
 package com.example.secureshelledmessenger.model;
 
 import java.time.LocalDateTime;

@@ -1,3 +1,12 @@
+/**
+ * @author Caleb Parten
+ * @author David Schmith
+ * @author Mario Soto
+ * @date 12/10/2024
+ *
+ * This file contains the adapter for the recycler view that is located on the chat page of the
+ * application. It shows all of the messages between the logged in user and the contact.
+ */
 package com.example.secureshelledmessenger.adapter;
 
 import android.view.LayoutInflater;
@@ -26,6 +35,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         this.key = contactKey;
     }
 
+    /**
+     * This method executes whenever an item in the recycler view is created.
+     * @param parent The ViewGroup into which the new View will be added after it is bound to
+     *               an adapter position.
+     * @param viewType The view type of the new View.
+     * @return
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,6 +51,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         return new ViewHolder(view);
     }
 
+    /**
+     * This method executes when the item is bound to the recycler view list.
+     * @param holder The ViewHolder which should be updated to represent the contents of the
+     *        item at the given position in the data set.
+     * @param position The position of the item within the adapter's data set.
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Message message = mainController.decryptMessage(messages.get(position), key);
@@ -62,10 +84,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         return messages.size();
     }
 
+    //Definition for object that represents each item in list
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
         TextView senderTextView;
         TextView contentTextView;
 
+        //Constructor for each item in recycler view
         public ViewHolder(View itemView) {
             super(itemView);
             senderTextView = itemView.findViewById(R.id.message_sender);

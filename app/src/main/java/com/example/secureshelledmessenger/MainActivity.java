@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.example.secureshelledmessenger.model.CheckMessageWorker;
 import com.example.secureshelledmessenger.model.Contact;
 //import com.example.secureshelledmessenger.model.User;
-import com.example.secureshelledmessenger.model.NotificationWorker;
+//import com.example.secureshelledmessenger.model.NotificationWorker;
 import com.example.secureshelledmessenger.ui.home.MainController;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -49,11 +49,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //build the notification channel when activity created
         buildNotifChannel();
 
+        //initiate contacts from the controller
         mainController = MainController.getInstance(this);
         mainController.getUserContacts();
 
+        //get shared preferences
         SharedPreferences prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
 
         //Load saved User ID
@@ -78,31 +81,26 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
+        //this runnable checks to see if there are new messages every 10 seconds
         recentMessageRunnable = new Runnable() {
             @Override
             public void run() {
                 System.out.println("updating recent messages");
+
+                //worker to check for new messages
                 initiateCheckMessageWorker();
+
+                //delay the runnable so it runs every 10 seconds
                 recentMessageHandler.postDelayed(this, 10000);
             }
         };
         recentMessageHandler.post(recentMessageRunnable);
 
-        initiateNotifyWorker();
-//        notifyRunnable = new Runnable() {
-//            @Override
-//            public void run() {
-//                System.out.println("checking to notify");
-//                initiateNotifyWorker();
-//                notifyHandler.postDelayed(this,20000);
-//            }
-//        };
-//        notifyHandler.post(notifyRunnable);
-
+        //new thread to request from the api
+        //used for testing
         new Thread(new Runnable() {
             @Override
             public void run() {
-//                mainController.createUser("David","D123");
                 mainController.getUserString(mainController.getCurrentUsername());
                 System.out.println(mainController.getCurrentPassword());
                 System.out.println(mainController.getCurrentUserID());
@@ -111,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
+    //apply theme to application
     private void applyTheme(AppTheme theme) {
         setTheme(theme.getStyleResId()); // Directly apply the theme
     }
@@ -144,25 +143,19 @@ public class MainActivity extends AppCompatActivity {
         return navController.navigateUp();
     }
 
+    /**
+     * This initiates a worker to check for recent messages an notify if they are found. This is ran
+     * every 10 seconds in a runnable.
+     */
     public void initiateCheckMessageWorker(){
-
-//        PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(CheckMessageWorker.class,
-//                10, TimeUnit.SECONDS).build();
-
         OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(CheckMessageWorker.class).build();
 
         WorkManager.getInstance(this).enqueue(oneTimeWorkRequest);
-//        WorkManager.getInstance(this).enqueueUniquePeriodicWork("refreshRecentMessages",
-//                ExistingPeriodicWorkPolicy.KEEP,periodicWorkRequest);
     }
 
-    public void initiateNotifyWorker(){
-        PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(NotificationWorker.class,
-                15,TimeUnit.MINUTES).build();
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork("checkNotifications",
-                ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,periodicWorkRequest);
-    }
-
+    /**
+     * This method builds the notification channel when the main activity is created.
+     */
     public void buildNotifChannel(){
         CharSequence channelName = "SSM";
         String description = "Notifications for Secure Shelled Messenger";

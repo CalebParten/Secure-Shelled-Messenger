@@ -15,49 +15,14 @@ public class ApiData {
     private final OkHttpClient httpClient;
     private static ApiData apiData;
     private ArrayList<Message> messages;
-    private static String urlBase = "https://ssm.cs458.enmucs.com/api/users";
-    private static MediaType json = MediaType.get("application/json; charset=utf-8");
 
 
     private ApiData(Context context){
         this.messages = new ArrayList<>();
         this.httpClient = new OkHttpClient();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                //These are users that have been created
-//                requestCreateUser("Mary","m");
-//                requestCreateUser("JohnSmith","js24");
-//                requestCreateUser("Mark","m24");
-
-
-//                Long newID = Long.parseLong(requestLookupUser("Mary"));
-//                Long loggedID = Long.parseLong(requestLookupUser("David"));
-//                sendMessage(newID,loggedID,"I am good", "m","test_key");
-//                deleteMessagesBetweenUsers(loggedID,newID,"D123","m");
-//                sendMessage(newID,loggedID,"This is a test of encrypt method","m");
-//                sendMessage(loggedID,newID,"Hello Mary","D123","test_key");
-//                sendMessage(loggedID,newID,"How are you?","D123","test_key");
-//                sendMessage(newID,loggedID,"Good. Yourself?","m","test_key");
-//                sendMessage(loggedID,newID,"good","D123","test_key");
-//                sendMessage(newID,loggedID,"Glad to hear","m","test_key");
-//                deleteMessage(loggedID,9,"D123");
-//                deleteMessage(loggedID,10,"D123");
-//                deleteMessage(loggedID,11,"D123");
-//                deleteMessage(loggedID,12,"D123");
-//                deleteMessage(loggedID,13,"D123");
-//                deleteMessage(loggedID,14,"D123");
-//                deleteMessage(loggedID,15,"D123");
-            }
-
-        }).start();
-
-
     }
 
-    //developer test methods
+    //developer test method
     public void waitBetweenMessage(){
         try {
             Thread.sleep(2000);
@@ -65,6 +30,8 @@ public class ApiData {
             throw new RuntimeException(e);
         }
     }
+
+    //developer test method
     public void deleteMessagesBetweenUsers(long senderID, long receiverID,String senderPass, String receiverPass){
         ArrayList<Message> messagesToDelete = getConversation(senderID,receiverID,senderPass);
         for(Message message: messagesToDelete){

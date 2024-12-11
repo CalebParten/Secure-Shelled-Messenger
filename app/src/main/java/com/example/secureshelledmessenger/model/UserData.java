@@ -1,3 +1,12 @@
+/**
+ * @author Caleb Parten
+ * @author David Schmith
+ * @author Mario Soto
+ * @date 12/10/2024
+ *
+ * This file defines the model for the user. It is a singleton object that is created when a
+ * user logs in. This is used throughout the application to use user information.
+ */
 package com.example.secureshelledmessenger.model;
 
 import android.content.Context;
