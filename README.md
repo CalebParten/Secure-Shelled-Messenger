@@ -3,6 +3,11 @@
 
 This android application provides a private messaging platform for users. Using symmetric end to end encryption. The application allows a user to create an account as well as create contacts with the intended recievers' usernames. When creating a contact the user will assign a private key to that contact. This key can be changed in the future; however, switching this key will not allow the decryption of previous messages. If the user switches back to the original key they will be able to see the decrypted messages once again. This allows for another layer of privacy because it allows each message or groups of messages to be encrypted and decrypted using different keys. The user is able to edit a contact's name and key; however, the contact's username is not changeable. Another ability that the user has is to change the theme of the application to selections like Dark Mode, High Contrast, etc. 
 
+### Core Files of the Application
+
+To view the files that are related to the applications front-end and back-end (models, activities, fragments). Go to the directory ```app/src/main```. The ```res``` directory contains all of the xml files used within the application. The rest of source files are within ```java/com/example/secureshelledmessenger/```.
+
+
 ### Running the application
 
 
